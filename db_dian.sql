@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2021 at 02:02 PM
+-- Generation Time: Jul 13, 2021 at 10:40 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id_admin` varchar(128) NOT NULL,
+  `nama` varchar(128) NOT NULL,
   `username` varchar(128) NOT NULL,
   `password` varchar(128) NOT NULL,
   `cabang` varchar(128) NOT NULL,
@@ -36,6 +37,13 @@ CREATE TABLE `admin` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `nama`, `username`, `password`, `cabang`, `level`, `created_at`, `updated_at`) VALUES
+('V99tYAm8xqhrN3BYyzxiYDFyjxcEscag', 'Dany Ahmad Ihza Prakoso', 'danyihza', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'hrLnGA8d13w0qWTxjYPFcbgmbRb5yonJ', 'Super', '2021-07-13 20:32:06', '2021-07-13 20:32:06');
 
 -- --------------------------------------------------------
 
@@ -51,6 +59,13 @@ CREATE TABLE `cabang` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `cabang`
+--
+
+INSERT INTO `cabang` (`id_cabang`, `kota`, `alamat`, `created_at`, `updated_at`) VALUES
+('hrLnGA8d13w0qWTxjYPFcbgmbRb5yonJ', 'Malang', 'Jl. Soekarno Hatta No 11 Lowokwaru', '2021-07-13 13:11:44', '2021-07-13 13:11:44');
+
 -- --------------------------------------------------------
 
 --
@@ -61,7 +76,7 @@ CREATE TABLE `detail_kursus` (
   `id_detail` varchar(128) NOT NULL,
   `kursus` int(11) DEFAULT NULL,
   `program` int(11) DEFAULT NULL,
-  `level` int(11) DEFAULT NULL,
+  `level` varchar(50) DEFAULT NULL,
   `catatan_kursus` text DEFAULT NULL,
   `hari_kursus` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `jam_kursus` varchar(128) NOT NULL,
@@ -81,7 +96,10 @@ CREATE TABLE `detail_kursus` (
 --
 
 INSERT INTO `detail_kursus` (`id_detail`, `kursus`, `program`, `level`, `catatan_kursus`, `hari_kursus`, `jam_kursus`, `no_urut`, `uang_pendaftaran`, `uang_kursus`, `uang_ujian_sertifikat`, `uang_buku`, `jumlah`, `tanggal_daftar`, `created_at`, `updated_at`) VALUES
-('IAbrxfrTjhQtgUL1MlpU8VvDHIWziI9d', 1, 1, 1, 'asdasdas', 'Senin,Selasa,Rabu,Kamis,Jumat', '12:00', 123, 50000, 1000000, 400000, 100000, NULL, '2021-07-12 17:00:00', '2021-07-13 04:17:32', '2021-07-13 04:17:32');
+('0vs5KsLVCWrUfyjSeN4EdiDfDGDZFo2e', 1, 1, '0', 'catatan', 'Senin', '12:00', 12, 150000, 900000, 80000, 100000, 1230000, '2021-07-12 17:00:00', '2021-07-13 14:42:45', '2021-07-13 14:42:45'),
+('IAbrxfrTjhQtgUL1MlpU8VvDHIWziI9d', 1, 0, '0', 'asdasdas', 'Senin,Selasa,Rabu', '12:00', 123, NULL, NULL, NULL, NULL, NULL, '2021-07-12 17:00:00', '2021-07-13 04:17:32', '2021-07-13 18:27:46'),
+('L6bTKGBgCv51ZZWbJ1RDcmTSVXhlI4NP', 1, 0, 'Basic', 'catatan', 'Kamis,Jumat', '12:00', 1235678, NULL, NULL, NULL, NULL, NULL, '2021-07-12 17:00:00', '2021-07-13 15:46:22', '2021-07-13 18:27:22'),
+('PxwwbrakZkP0AzszAjtVnMY3J5eNnEP9', 1, 1, '0', NULL, 'Senin,Kamis,Jumat', '12:00', 123, 150000, 900000, 80000, 100000, 1230000, '2021-07-12 17:00:00', '2021-07-13 14:45:01', '2021-07-13 14:45:01');
 
 -- --------------------------------------------------------
 
@@ -102,6 +120,43 @@ CREATE TABLE `detail_pembayaran` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `detail_pembayaran`
+--
+
+INSERT INTO `detail_pembayaran` (`id_detail_pembayaran`, `id_siswa`, `id_detail_kursus`, `pembayaran_1`, `pembayaran_2`, `pembayaran_3`, `pembayaran_4`, `tanggal`, `created_at`, `updated_at`) VALUES
+(1, 'A3nTZTdsb8Ttbjyz676G4sulBqnkDMmT', 'L6bTKGBgCv51ZZWbJ1RDcmTSVXhlI4NP', 150000, 100000, NULL, NULL, NULL, NULL, '2021-07-13 16:59:38'),
+(3, 'rZ6oSJnF82ngvuizF5HOcPWf71dWxtDU', 'IAbrxfrTjhQtgUL1MlpU8VvDHIWziI9d', 1000000, NULL, NULL, NULL, NULL, '2021-07-13 17:02:55', '2021-07-13 17:02:55'),
+(4, 'fvwoPM52MKCjnNHYufveIDJHH95yYAv2', 'PxwwbrakZkP0AzszAjtVnMY3J5eNnEP9', 200000, 100000, 100000, NULL, NULL, '2021-07-13 18:47:41', '2021-07-13 19:19:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_transaksi`
+--
+
+CREATE TABLE `detail_transaksi` (
+  `id_detail_transaksi` varchar(32) NOT NULL,
+  `tanggal` timestamp NULL DEFAULT NULL,
+  `keterangan` varchar(128) NOT NULL,
+  `jenis_transaksi` varchar(32) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `tanggal`, `keterangan`, `jenis_transaksi`, `jumlah`, `created_at`, `updated_at`) VALUES
+('9c6h7kz4kj25kG2aMM68Bi96fPcuGFnz', '2021-07-12 17:00:00', 'acsaca', 'Pemasukan', 100000, '2021-07-13 16:59:38', '2021-07-13 16:59:38'),
+('gJVUUWqVptRDxf15pjJ2Qe3eoGwOQshT', '2021-07-13 17:00:00', '12asdawdas', 'Pemasukan', 100000, '2021-07-13 18:48:20', '2021-07-13 18:48:20'),
+('lMCpJYLvp9ohwQgHc9nqh08ZZGAUsxk7', '2021-07-13 17:00:00', 'asdsadwasd', 'Pemasukan', 1000000, '2021-07-13 17:02:55', '2021-07-13 17:02:55'),
+('qPGQ2ef1tdI8pU3N36829HN5R2mWpaK5', '2021-07-13 17:00:00', 'adasdasds', 'Pemasukan', 600000, '2021-07-13 18:49:01', '2021-07-13 18:49:01'),
+('XYimNZRB46LsFMAe7zhcTFTROgnOBPFJ', '2021-07-13 17:00:00', 'test', 'Pemasukan', 200000, '2021-07-13 18:47:41', '2021-07-13 18:47:41'),
+('yLSvyXMiWWRUuYhWKwF6m5iLzu7SfbFv', '2021-07-13 17:00:00', 'asdsadad', 'Pengeluaran', 20000, '2021-07-13 17:16:47', '2021-07-13 17:16:47');
+
 -- --------------------------------------------------------
 
 --
@@ -120,7 +175,31 @@ CREATE TABLE `fk_detail_siswa` (
 --
 
 INSERT INTO `fk_detail_siswa` (`id_siswa`, `id_detail_kursus`, `created_at`, `updated_at`) VALUES
-('rZ6oSJnF82ngvuizF5HOcPWf71dWxtDU', 'IAbrxfrTjhQtgUL1MlpU8VvDHIWziI9d', '2021-07-13 04:17:32', '2021-07-13 04:17:32');
+('rZ6oSJnF82ngvuizF5HOcPWf71dWxtDU', 'IAbrxfrTjhQtgUL1MlpU8VvDHIWziI9d', '2021-07-13 04:17:32', '2021-07-13 04:17:32'),
+('cB2Gkb1EExRzobrFACRbh35rhftFYtMR', '0vs5KsLVCWrUfyjSeN4EdiDfDGDZFo2e', '2021-07-13 14:42:45', '2021-07-13 14:42:45'),
+('fvwoPM52MKCjnNHYufveIDJHH95yYAv2', 'PxwwbrakZkP0AzszAjtVnMY3J5eNnEP9', '2021-07-13 14:45:01', '2021-07-13 14:45:01'),
+('A3nTZTdsb8Ttbjyz676G4sulBqnkDMmT', 'L6bTKGBgCv51ZZWbJ1RDcmTSVXhlI4NP', '2021-07-13 15:46:22', '2021-07-13 15:46:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jabatan`
+--
+
+CREATE TABLE `jabatan` (
+  `id_jabatan` varchar(32) NOT NULL,
+  `jenis_jabatan` varchar(128) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jabatan`
+--
+
+INSERT INTO `jabatan` (`id_jabatan`, `jenis_jabatan`, `created_at`, `updated_at`) VALUES
+('sRqVpzWJFM9cjwoWsf1lExnLQrdv6bTZ', 'Wakil Direktur', '2021-07-13 13:20:49', '2021-07-13 13:20:49'),
+('WEf6dBxE93Cf5cwuGF434Ln2QuazPnH4', 'Pimpinan', '2021-07-13 13:20:34', '2021-07-13 13:20:34');
 
 -- --------------------------------------------------------
 
@@ -130,12 +209,20 @@ INSERT INTO `fk_detail_siswa` (`id_siswa`, `id_detail_kursus`, `created_at`, `up
 
 CREATE TABLE `karyawan` (
   `id_karyawan` varchar(32) NOT NULL,
-  `jabatan` int(11) NOT NULL,
+  `nama` varchar(128) NOT NULL,
+  `jabatan` varchar(32) NOT NULL,
   `no_telepon` varchar(20) NOT NULL,
-  `cabang` int(11) NOT NULL,
+  `cabang` varchar(32) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `karyawan`
+--
+
+INSERT INTO `karyawan` (`id_karyawan`, `nama`, `jabatan`, `no_telepon`, `cabang`, `created_at`, `updated_at`) VALUES
+('JvQVsbZWQa91oNSkDWKl3z32ZJJLcUiM', 'Dany Ahmad Ihza Prakoso', 'WEf6dBxE93Cf5cwuGF434Ln2QuazPnH4', '082331147549', 'hrLnGA8d13w0qWTxjYPFcbgmbRb5yonJ', '2021-07-13 13:30:26', '2021-07-13 13:30:26');
 
 -- --------------------------------------------------------
 
@@ -149,6 +236,14 @@ CREATE TABLE `kursus` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kursus`
+--
+
+INSERT INTO `kursus` (`id_kursus`, `nama_kursus`, `created_at`, `updated_at`) VALUES
+(1, 'Bahasa Inggris', '2021-07-13 06:04:30', '2021-07-13 06:04:30'),
+(2, 'Komputer', '2021-07-13 13:09:13', '2021-07-13 13:09:13');
 
 -- --------------------------------------------------------
 
@@ -191,10 +286,17 @@ CREATE TABLE `pengeluaran` (
   `id_pengeluaran` varchar(128) NOT NULL,
   `rincian` varchar(128) NOT NULL,
   `biaya` int(11) NOT NULL,
-  `tanggal` int(11) NOT NULL,
+  `tanggal` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengeluaran`
+--
+
+INSERT INTO `pengeluaran` (`id_pengeluaran`, `rincian`, `biaya`, `tanggal`, `created_at`, `updated_at`) VALUES
+('7kIkS7I0efMEvxKKLMVLMbIJV2TLc1CR', 'asdsadad', 20000, '2021-07-13 17:00:00', '2021-07-13 17:16:47', '2021-07-13 17:16:47');
 
 -- --------------------------------------------------------
 
@@ -208,6 +310,13 @@ CREATE TABLE `program` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `program`
+--
+
+INSERT INTO `program` (`id_program`, `nama_program`, `created_at`, `updated_at`) VALUES
+(1, 'Diploma', '2021-07-13 13:17:45', '2021-07-13 13:17:45');
 
 -- --------------------------------------------------------
 
@@ -766,7 +875,11 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id_siswa`, `nis`, `nama`, `kota_lahir`, `tanggal_lahir`, `alamat`, `kota_tinggal`, `no_telpon`, `pendidikan`, `created_at`, `updated_at`) VALUES
-('rZ6oSJnF82ngvuizF5HOcPWf71dWxtDU', '23423', 'Dany Ahmad Ihza Prakoso', '1101', '2021-07-01 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '1102', '082331147549', 'SMP', '2021-07-13 04:17:32', '2021-07-13 04:17:32');
+('A3nTZTdsb8Ttbjyz676G4sulBqnkDMmT', '875357', 'Budi', '3401', '2021-07-13 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '3573', '082331147549', 'D3', '2021-07-13 15:46:22', '2021-07-13 18:27:22'),
+('cB2Gkb1EExRzobrFACRbh35rhftFYtMR', '6789', 'Dany Ahmad Ihza Prakoso', '1103', '2010-06-23 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '1106', '082331147549', 'S1', '2021-07-13 14:42:45', '2021-07-13 14:42:45'),
+('F2l3vilodClluqJqMfWQ4dbu0pTOceqF', '875357', 'Budi', '1101', '2021-07-13 17:43:43', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '3573', '082331147549', 'D3', '2021-07-13 15:45:56', '2021-07-13 15:45:56'),
+('fvwoPM52MKCjnNHYufveIDJHH95yYAv2', '90909090', 'Budi Santoso', '3574', '2002-07-17 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '3573', '082331147549', 'SMA', '2021-07-13 14:45:01', '2021-07-13 14:45:01'),
+('rZ6oSJnF82ngvuizF5HOcPWf71dWxtDU', '23423', 'Dany Ahmad Ihza Prakoso', '3209', '2021-07-01 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '1102', '082331147549', 'SMP', '2021-07-13 04:17:32', '2021-07-13 18:27:46');
 
 --
 -- Indexes for dumped tables
@@ -795,6 +908,18 @@ ALTER TABLE `detail_kursus`
 --
 ALTER TABLE `detail_pembayaran`
   ADD PRIMARY KEY (`id_detail_pembayaran`);
+
+--
+-- Indexes for table `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD PRIMARY KEY (`id_detail_transaksi`);
+
+--
+-- Indexes for table `jabatan`
+--
+ALTER TABLE `jabatan`
+  ADD PRIMARY KEY (`id_jabatan`);
 
 --
 -- Indexes for table `karyawan`
@@ -853,13 +978,13 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `detail_pembayaran`
 --
 ALTER TABLE `detail_pembayaran`
-  MODIFY `id_detail_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `kursus`
 --
 ALTER TABLE `kursus`
-  MODIFY `id_kursus` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kursus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `level`
@@ -871,7 +996,7 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `id_program` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_program` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
