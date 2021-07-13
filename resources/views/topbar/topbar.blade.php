@@ -1,9 +1,21 @@
 <!-- BEGIN: Top Bar -->
 <div class="top-bar">
     <!-- BEGIN: Breadcrumb -->
-    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> <a href="" class="">Application</a> <i
-            data-feather="chevron-right" class="breadcrumb__icon"></i> <a href=""
-            class="breadcrumb--active">Dashboard</a> </div>
+    @if(isset($parent))
+    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> 
+        <a href="" class="">{{ ucwords($parent) }}</a> 
+        <i data-feather="chevron-right" class="breadcrumb__icon"> </i> 
+        <a href="" class="{{ isset($extra) ? '' : 'breadcrumb--active' }}">{{ ucwords($title) }} </a>
+        @if(isset($extra))
+        <i data-feather="chevron-right" class="breadcrumb__icon"> </i> 
+        <a href="" class="breadcrumb--active">{{ ucwords($extra) }} </a>
+        @endif
+    </div>
+    @else
+    <div class="-intro-x breadcrumb mr-auto hidden sm:flex"> 
+        <a href="" class="breadcrumb--active">{{ ucwords($title) }}</a>  
+    </div>
+    @endif
     <!-- END: Breadcrumb -->
     <!-- BEGIN: Search -->
     <div class="intro-x relative mr-3 sm:mr-6">
