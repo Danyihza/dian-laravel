@@ -49,7 +49,7 @@
                         </tbody>
                     </table>
                     <div class="mt-5">
-                        <a href="#" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cetak</a>
+                        <a href="#" onclick="window.print()" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cetak</a>
                         <a href="#" class="button w-24 bg-theme-1 text-white">Simpan</a>
                         <a href="{{ route('laporanHarianView') }}" class="button w-24 bg-theme-1 text-white">Kembali</a>
                     </div>

@@ -17,7 +17,7 @@
                     <div class="intro-y col-span-12 lg:col-span-6">
                         <!-- BEGIN: Form Layout -->
                         <div class="intro-y box p-5 mb-5">
-                            <form action="" method="post">
+                            <form action="{{ route('addAdmin') }}" method="post">
                                 @csrf
                                 <div>
                                     <label>Nama</label>
@@ -36,10 +36,23 @@
                                     <input type="password" class="input w-full border mt-2" name="conf_password" placeholder="Masukkan Konfirmasi Password">
                                 </div>
                                 <div class="mt-3"> 
+                                    <label>Cabang</label>
+                                    <div class="mt-2"> 
+                                        <select name="cabang" class="tail-select w-full">
+                                            <option value="0" selected>Pilih Cabang</option>
+                                            @foreach ($cabang as $cbg)
+                                            <option value="{{ $cbg->id_cabang }}">{{ $cbg->alamat }} - {{ $cbg->kota }}</option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="mt-3"> 
                                     <label>Level Admin</label>
                                     <div class="mt-2"> 
                                         <select name="level" class="tail-select w-full">
                                             <option value="0" selected>Pilih Level</option>
+                                            <option value="Normal">Normal Admin</option>
+                                            <option value="Super">Super Admin</option>
                                         </select> 
                                     </div>
                                 </div>
@@ -61,24 +74,35 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($admin as $adm)
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        21/07/2021
+                                        {{$loop->iteration}}
                                     </span>
                                 </td>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        Ini merupakan rincian dari sebuah pengeluaran
+                                        {{$adm->nama}}
                                     </span>
                                 </td>
-                                <td class="text-center">Rp 82.000</td>
+                                <td class="text-center">
+                                    <span class="font-medium">
+                                        {{$adm->username}}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="font-medium">
+                                        {{$adm->level . ' Admin'}}
+                                    </span>
+                                </td>
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <a class="flex items-center text-theme-6" href="javascript:;" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                        <a class="flex items-center text-theme-6" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" href="{{ route('removeAdmin', $adm->id_admin) }}" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

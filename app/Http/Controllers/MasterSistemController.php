@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Cabang;
 use App\Models\Jabatan;
 use App\Models\Karyawan;

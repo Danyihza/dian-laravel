@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdministrasiController;
 use App\Http\Controllers\AdministratorController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterSistemController;
 use App\Http\Controllers\ViewLaporanController;
@@ -22,7 +23,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::get('/', [AuthController::class, 'loginView'])->name('loginView');
+Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 Route::get('/administrasi/pendaftaran', [AdministrasiController::class, 'pendaftaranView'])->name('pendaftaranView');
 Route::get('/administrasi/pembayaran', [AdministrasiController::class, 'pembayaranView'])->name('pembayaranView');
 Route::get('/administrasi/pembayaran/{id_siswa}/{id_detail_kursus}', [AdministrasiController::class, 'detailPembayaranView'])->name('detailPembayaranView');
@@ -45,6 +48,8 @@ Route::get('/mastersistem/kursus', [MasterSistemController::class, 'kursusView']
 Route::get('/mastersistem/program', [MasterSistemController::class, 'programView'])->name('programView');
 Route::get('/mastersistem/jabatan', [MasterSistemController::class, 'jabatanView'])->name('jabatanView');
 Route::get('/administrator', [AdministratorController::class, 'listAdminView'])->name('listAdminView');
+Route::post('/administrator/add', [AdministratorController::class, 'addAdmin'])->name('addAdmin');
+Route::get('/administrator/remove/{id_admin?}', [AdministratorController::class, 'removeAdmin'])->name('removeAdmin');
 
 Route::post('/administrasi/pendaftaran/daftar', [AdministrasiController::class, 'daftar'])->name('daftar');
 Route::post('/mastersistem/karyawan/add', [MasterSistemController::class, 'addKaryawan'])->name('addKaryawan');
