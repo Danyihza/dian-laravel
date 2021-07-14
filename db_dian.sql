@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2021 at 10:40 PM
+-- Generation Time: Jul 14, 2021 at 11:37 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -150,8 +150,10 @@ CREATE TABLE `detail_transaksi` (
 --
 
 INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `tanggal`, `keterangan`, `jenis_transaksi`, `jumlah`, `created_at`, `updated_at`) VALUES
+('0vLnIU6UKheXguelR7eiIRofuq24cPvD', '2021-07-13 17:00:00', 'asdsadad', 'Pengeluaran', 20000, '2021-07-14 04:56:23', '2021-07-14 04:56:23'),
 ('9c6h7kz4kj25kG2aMM68Bi96fPcuGFnz', '2021-07-12 17:00:00', 'acsaca', 'Pemasukan', 100000, '2021-07-13 16:59:38', '2021-07-13 16:59:38'),
 ('gJVUUWqVptRDxf15pjJ2Qe3eoGwOQshT', '2021-07-13 17:00:00', '12asdawdas', 'Pemasukan', 100000, '2021-07-13 18:48:20', '2021-07-13 18:48:20'),
+('KjFlPqKKFBpXyuwzgQtdOanXCdLrwlGZ', '2021-07-13 17:00:00', 'asdsadad', 'Pengeluaran', 20000, '2021-07-14 05:08:28', '2021-07-14 05:08:28'),
 ('lMCpJYLvp9ohwQgHc9nqh08ZZGAUsxk7', '2021-07-13 17:00:00', 'asdsadwasd', 'Pemasukan', 1000000, '2021-07-13 17:02:55', '2021-07-13 17:02:55'),
 ('qPGQ2ef1tdI8pU3N36829HN5R2mWpaK5', '2021-07-13 17:00:00', 'adasdasds', 'Pemasukan', 600000, '2021-07-13 18:49:01', '2021-07-13 18:49:01'),
 ('XYimNZRB46LsFMAe7zhcTFTROgnOBPFJ', '2021-07-13 17:00:00', 'test', 'Pemasukan', 200000, '2021-07-13 18:47:41', '2021-07-13 18:47:41'),
@@ -175,10 +177,8 @@ CREATE TABLE `fk_detail_siswa` (
 --
 
 INSERT INTO `fk_detail_siswa` (`id_siswa`, `id_detail_kursus`, `created_at`, `updated_at`) VALUES
-('rZ6oSJnF82ngvuizF5HOcPWf71dWxtDU', 'IAbrxfrTjhQtgUL1MlpU8VvDHIWziI9d', '2021-07-13 04:17:32', '2021-07-13 04:17:32'),
 ('cB2Gkb1EExRzobrFACRbh35rhftFYtMR', '0vs5KsLVCWrUfyjSeN4EdiDfDGDZFo2e', '2021-07-13 14:42:45', '2021-07-13 14:42:45'),
-('fvwoPM52MKCjnNHYufveIDJHH95yYAv2', 'PxwwbrakZkP0AzszAjtVnMY3J5eNnEP9', '2021-07-13 14:45:01', '2021-07-13 14:45:01'),
-('A3nTZTdsb8Ttbjyz676G4sulBqnkDMmT', 'L6bTKGBgCv51ZZWbJ1RDcmTSVXhlI4NP', '2021-07-13 15:46:22', '2021-07-13 15:46:22');
+('fvwoPM52MKCjnNHYufveIDJHH95yYAv2', 'PxwwbrakZkP0AzszAjtVnMY3J5eNnEP9', '2021-07-13 14:45:01', '2021-07-13 14:45:01');
 
 -- --------------------------------------------------------
 
@@ -296,7 +296,7 @@ CREATE TABLE `pengeluaran` (
 --
 
 INSERT INTO `pengeluaran` (`id_pengeluaran`, `rincian`, `biaya`, `tanggal`, `created_at`, `updated_at`) VALUES
-('7kIkS7I0efMEvxKKLMVLMbIJV2TLc1CR', 'asdsadad', 20000, '2021-07-13 17:00:00', '2021-07-13 17:16:47', '2021-07-13 17:16:47');
+('2UmpPu0EBWOlIoOQcmPTki1fotY2sx6m', 'asdsadad', 20000, '2021-07-13 17:00:00', '2021-07-14 05:08:28', '2021-07-14 05:08:28');
 
 -- --------------------------------------------------------
 
