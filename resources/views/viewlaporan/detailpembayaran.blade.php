@@ -9,6 +9,7 @@
         <!-- BEGIN: Content -->
         <div class="content">
             @include('topbar.topbar')
+            @include('notification')
             <div class="grid grid-cols-12 gap-6 mt-5">
                 <div class="col-span-12 overflow-auto lg:overflow-visible">
                         <div class="grid grid-cols-12 gap-8 mt-5">

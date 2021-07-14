@@ -31,4 +31,10 @@ class AuthController extends Controller
             }
         }
     }
+
+    public function signout()
+    {
+        session()->forget('login-data');
+        return Redirect::route('loginView');
+    }
 }

@@ -9,6 +9,7 @@
         <!-- BEGIN: Content -->
         <div class="content">
             @include('topbar.topbar')
+            @include('notification')
             {{-- <h2 class="text-lg font-medium mt-10">
                 {{ ucwords($parent) . ' - ' . ucwords($title) }}
             </h2> --}}

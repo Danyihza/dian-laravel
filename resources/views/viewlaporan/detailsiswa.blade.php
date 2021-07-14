@@ -9,6 +9,7 @@
         <!-- BEGIN: Content -->
         <div class="content">
             @include('topbar.topbar')
+            @include('notification')
             <div class="grid grid-cols-12 gap-6 mt-5">
                 <div class="col-span-12 overflow-auto lg:overflow-visible">
                     <form action="{{ route('editSiswa') }}?id_siswa={{ $detail->hasSiswa->id_siswa }}&id_detail_kursus={{ $detail->hasDetailKursus->id_detail }}" method="post">

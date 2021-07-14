@@ -9,6 +9,7 @@
         <!-- BEGIN: Content -->
         <div class="content">
             @include('topbar.topbar')
+            @include('notification')
             {{-- <h2 class="text-lg font-medium mt-10">
                 {{ ucwords($parent) . ' - ' . ucwords($title) }}
             </h2> --}}
@@ -39,7 +40,7 @@
                             <div class="dropdown-box w-40" id="_votzptxl8" data-popper-placement="bottom-end"
                                 style="position: absolute; inset: 0px auto auto 0px; transform: translate(-45px, 39px);">
                                 <div class="dropdown-box__content box dark:bg-dark-1 p-2">
-                                    <a href="javascript:;"
+                                    <a href="{{ route('exportArsipSiswa') }}" target="_blank"
                                         class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"
                                         id="tabulator-export-xlsx"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -50,7 +51,7 @@
                                             <line x1="16" y1="13" x2="8" y2="13"></line>
                                             <line x1="16" y1="17" x2="8" y2="17"></line>
                                             <polyline points="10 9 9 9 8 9"></polyline>
-                                        </svg> Export XLSX </a>
+                                        </svg> Export PDF </a>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +91,7 @@
                                     <div class="flex justify-center items-center">
                                         <a class="flex items-center mr-3" href="{{ route('detailSiswa') }}?s={{ $s->hasSiswa->id_siswa }}&d={{ $s->hasDetailKursus->id_detail }}"> <i
                                                 data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                        <a class="flex items-center text-theme-6" href="javascript:;"
+                                        <a class="flex items-center text-theme-6" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" href="{{ route('removeSiswa') }}?s={{ $s->hasSiswa->id_siswa }}&d={{ $s->hasDetailKursus->id_detail }}"
                                             data-toggle="modal" data-target="#delete-confirmation-modal"> <i
                                                 data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                                     </div>

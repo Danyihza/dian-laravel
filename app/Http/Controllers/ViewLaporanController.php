@@ -13,6 +13,7 @@ use App\Models\Siswa;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use PDF;
 
 class ViewLaporanController extends Controller
 {
@@ -129,6 +130,15 @@ class ViewLaporanController extends Controller
         return Redirect::route('arsipSiswaView')->with('success', 'Data berhasil terupdate');
     }
 
+    public function removeSiswa(Request $request)
+    {
+        $id_siswa = $request->s;
+        $id_detail_kursus = $request->d;
+
+        Fk_detail_siswa::where('id_siswa', $id_siswa)->where('id_detail_kursus', $id_detail_kursus)->delete();
+        return Redirect::back()->with('success', 'Data Siswa Berhasil Dihapus');
+    }
+
     public function detailPembayaran(Request $request)
     {
         try {
@@ -195,10 +205,45 @@ class ViewLaporanController extends Controller
         $tanggal_set_sampai = explode('/', $request->tanggal_sampai);
         $tanggal_dari = $tanggal_set_dari[2] . '-' . $tanggal_set_dari[1] . '-' . $tanggal_set_dari[0];
         $tanggal_sampai = $tanggal_set_sampai[2] . '-' . $tanggal_set_sampai[1] . '-' . $tanggal_set_sampai[0];
-        $data['transaksi'] = Detail_Transaksi::where('tanggal', '>=', $tanggal_dari)->where('tanggal', '<=', $tanggal_sampai)->get();
+        $data['dari'] = $request->tanggal_dari;
+        $data['sampai'] = $request->tanggal_sampai;
+        $data['transaksi'] = Detail_Transaksi::where('tanggal', '>=', $tanggal_dari)->where('tanggal', '<=', $tanggal_sampai)->orderBy('tanggal', 'ASC')->get();
         if ($data['transaksi'] == null) {
             return Redirect::route('laporanPeriodeView')->with('error', 'Tidak ada data yang tercatat pada tanggal tersebut');
         }
         return view('viewlaporan.detaillaporanperiode', $data);
+    }
+
+    public function exportArsipSiswa()
+    {
+        $data['siswa'] = Fk_detail_siswa::all();
+        $pdf = PDF::loadview('export.pdf.arsipsiswa', $data);
+
+        return $pdf->download('Arsip Siswa.pdf');
+    }
+
+    public function exportLaporanHarian(Request $request)
+    {
+        $tanggal_laporan = urldecode($request->date);
+        $tanggal = explode("/", $tanggal_laporan);
+        $data['tanggal'] = $tanggal_laporan;
+        $data['laporanharian'] = Detail_Transaksi::where('tanggal', $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0])->get();
+        $pdf = PDF::loadview('export.pdf.laporanharian', $data);
+
+        return $pdf->download('Laporan Harian - ' . $tanggal_laporan . '.pdf');
+    }
+
+    public function exportLaporanPeriode(Request $request)
+    {
+        $tanggal_dari = urldecode($request->from);
+        $tanggal_sampai = urldecode($request->to);
+        $dari = explode("/", $tanggal_dari);
+        $sampai = explode("/", $tanggal_sampai);
+        $data['tanggal_dari'] = $tanggal_dari;
+        $data['tanggal_sampai'] = $tanggal_sampai;
+        $data['laporanperiode'] = Detail_Transaksi::where('tanggal', '>=', $dari[2] . '-' . $dari[1] . '-' . $dari[0])->where('tanggal', '<=', $sampai[2] . '-' . $sampai[1] . '-' . $sampai[0])->orderBy('tanggal', 'ASC')->get();
+        $pdf = PDF::loadview('export.pdf.laporanperiode', $data);
+
+        return $pdf->download('Laporan Harian - ' . $tanggal_dari . ' s/d ' . $tanggal_sampai . '.pdf');
     }
 }

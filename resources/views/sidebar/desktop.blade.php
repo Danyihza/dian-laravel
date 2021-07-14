@@ -113,12 +113,14 @@
                 </li>
             </ul>
         </li>
+        @if(session('login-data')['level'] == 'Super')
         <li>
             <a href="{{ route('listAdminView') }}" class="side-menu {{ $title == 'Administrator' ? 'side-menu--active' : ''}}">
                 <div class="side-menu__icon"> <i data-feather="user-check"></i> </div>
                 <div class="side-menu__title"> Admin </div>
             </a>
         </li>
+        @endif
     </ul>
 </nav>
 <!-- END: Side Menu -->

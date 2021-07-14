@@ -63,8 +63,9 @@ class MasterSistemController extends Controller
             'jabatan' => 'required',
             'no_telepon' => 'required',
             'cabang' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
         ]);
-
         $newKaryawan = new Karyawan;
         $newKaryawan->id_karyawan = Str::random(32);
         $newKaryawan->nama = $request->nama;
@@ -79,7 +80,10 @@ class MasterSistemController extends Controller
     {
         $request->validate([
             'jenis_jabatan' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
         ]);
+        
 
         $newJabatan = new Jabatan;
         $newJabatan->id_jabatan = Str::random(32);
@@ -93,6 +97,8 @@ class MasterSistemController extends Controller
         $request->validate([
             'kota' => 'required',
             'alamat' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
         ]);
         
         $newCabang = new Cabang;
@@ -107,6 +113,8 @@ class MasterSistemController extends Controller
     {
         $request->validate([
             'nama_kursus' => 'required'
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
         ]);
 
         $newKursus = new Kursus;
@@ -119,6 +127,8 @@ class MasterSistemController extends Controller
     {
         $request->validate([
             'nama_program' => 'required'
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
         ]);
 
         $newProgram = new Program;

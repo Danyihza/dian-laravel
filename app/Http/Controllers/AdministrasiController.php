@@ -171,6 +171,13 @@ class AdministrasiController extends Controller
 
     public function addPengeluaran(Request $request)
     {
+        $request->validate([
+            'tanggal' => 'required',
+            'rincian' => 'required',
+            'biaya' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
+        ]);
         $newPengeluaran = new Pengeluaran;
         $newPengeluaran->id_pengeluaran = Str::random(32);
         $newPengeluaran->rincian = $request->rincian;
@@ -188,5 +195,11 @@ class AdministrasiController extends Controller
         $newDetailTransaksi->jumlah = $request->biaya;
         $newDetailTransaksi->save();
         return Redirect::back()->with('success', 'Data Baru Pengeluaran Berhasil Ditambahkan');
+    }
+
+    public function removePengeluaran($id_pengeluaran)
+    {
+        Pengeluaran::where('id_pengeluaran', $id_pengeluaran)->delete();
+        return Redirect::back()->with('success', 'Data Berhasil Dihapus');
     }
 }

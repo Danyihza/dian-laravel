@@ -9,6 +9,7 @@
         <!-- BEGIN: Content -->
         <div class="content">
             @include('topbar.topbar')
+            @include('notification')
             {{-- <h2 class="text-lg font-medium mt-10">
                 {{ ucwords($parent) . ' - ' . ucwords($title) }}
             </h2> --}}
@@ -98,6 +99,7 @@
                                 </td>
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
+                                        <a class="flex items-center text-theme-12 mr-3" href="{{ route('changePasswordView', $adm->id_admin) }}" > <i data-feather="key" class="w-4 h-4 mr-1"></i> Update Password </a>
                                         <a class="flex items-center text-theme-6" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" href="{{ route('removeAdmin', $adm->id_admin) }}" data-toggle="modal" data-target="#delete-confirmation-modal"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                                     </div>
                                 </td>

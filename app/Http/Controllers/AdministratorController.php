@@ -18,8 +18,24 @@ class AdministratorController extends Controller
         return view('admin.listadmin', $data);
     }
 
+    public function changePasswordView($id_admin)
+    {
+        $data['title'] = 'Administrator';
+        $data['admin'] = Admin::where('id_admin', $id_admin)->first();
+        return view('admin.changepassword', $data);
+    }
+
     public function addAdmin(Request $request)
     {
+        $request->validate([
+            'nama' => 'required',
+            'username' => 'required',
+            'conf_password' => 'required',
+            'cabang' => 'required',
+            'level' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
+        ]);
         if ($request->password != $request->conf_password) {
             return Redirect::back()->with('error', 'Password Tidak Cocok');
         }
@@ -38,5 +54,24 @@ class AdministratorController extends Controller
     {
         Admin::where('id_admin', $id_admin)->delete();
         return Redirect::back()->with('success', 'Data Admin Berhasil Dihapus');
+    }
+
+    public function changePassword(Request $request)
+    {
+        if ($request->password != $request->conf_password) {
+            return Redirect::back()->with('error', 'Password tidak cocok');
+        }
+        $request->validate([
+            'password' => 'required',
+            'conf_password' => 'required'
+        ],[
+            'required' => 'Mohon isi kolom password & konfirmasi password'
+        ]);
+        $id_admin = $request->id_admin;
+        $admin = Admin::where('id_admin', $id_admin)->first();
+        $admin->password = hash('sha256', $request->conf_password);
+        $admin->save();
+
+        return Redirect::route('listAdminView')->with('success', 'Password berhasil diupdate');
     }
 }
