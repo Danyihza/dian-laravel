@@ -246,4 +246,26 @@ class ViewLaporanController extends Controller
 
         return $pdf->download('Laporan Harian - ' . $tanggal_dari . ' s/d ' . $tanggal_sampai . '.pdf');
     }
+
+    public function printArsipPembayaran(Request $request)
+    {
+        // $id_siswa = $request->s;
+        // $id_detail_kursus = $request->d;
+        // $data['siswa'] = Siswa::where('id_siswa', $id_siswa)->first();
+        // $data['detail_kursus'] = Detail_Kursus::where('id_detail', $id_detail_kursus)->first();
+        // $detail_pembayaran = Detail_Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('id_siswa', $id_siswa)->first();
+        // if ($detail_pembayaran == null) {
+        //     throw new Exception('error');
+        // }
+        // $data['telah_dibayar'] = 0;
+        // if ($detail_pembayaran) {
+        //     $data['telah_dibayar'] += $detail_pembayaran->pembayaran_1;
+        //     $data['telah_dibayar'] += $detail_pembayaran->pembayaran_2;
+        //     $data['telah_dibayar'] += $detail_pembayaran->pembayaran_3;
+        //     $data['telah_dibayar'] += $detail_pembayaran->pembayaran_4;
+        // }
+        // $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'];
+        // $data['detail_pembayaran']  = $detail_pembayaran;
+        return view('print.arsippembayaran');
+    }
 }

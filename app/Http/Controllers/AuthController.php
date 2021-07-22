@@ -25,10 +25,15 @@ class AuthController extends Controller
                     'id' => $admin->id_admin,
                     'nama' => $admin->nama,
                     'level' => $admin->level,
+                    'cabang' => $admin->cabang
                 ];
                 session(['login-data' => $dataLogin]);
                 return Redirect::route('dashboard');
+            } else {
+                return Redirect::back()->with('error', 'Password Salah');
             }
+        } else {
+            return Redirect::back()->with('error', 'Username salah');
         }
     }
 

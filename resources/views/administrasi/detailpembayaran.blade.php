@@ -168,11 +168,7 @@
                                                 :
                                             </td>
                                             <td class="font-medium uang">
-                                                @if($detail_pembayaran)
-                                                    {{ $sisa_pembayaran }}
-                                                @else
-                                                    {{ 0 }}
-                                                @endif
+                                                {{ $sisa_pembayaran }}
                                             </td>
                                         </tr>
                                     </table>

@@ -111,6 +111,12 @@
                         <div class="side-menu__title"> Jabatan </div>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('biayaView') }}" class="side-menu {{ $title == 'Biaya' ? 'side-menu--active' : ''}}">
+                        <div class="side-menu__icon"> <i data-feather="dollar-sign"></i> </div>
+                        <div class="side-menu__title"> Biaya </div>
+                    </a>
+                </li>
             </ul>
         </li>
         @if(session('login-data')['level'] == 'Super')

@@ -44,6 +44,7 @@ Route::group(['middleware' => 'authmiddleware'], function () {
     Route::get('/viewlaporan/arsippembayaran', [ViewLaporanController::class, 'arsipPembayaranView'])->name('arsipPembayaranView');
     Route::get('/viewlaporan/arsippembayaran/detail', [ViewLaporanController::class, 'detailPembayaran'])->name('detailArsipPembayaran');
     Route::post('/viewlaporan/arsippembayaran/edit', [ViewLaporanController::class, 'editPembayaran'])->name('editPembayaran');
+    Route::get('/viewlaporan/arsippembayaran/print', [ViewLaporanController::class, 'printArsipPembayaran'])->name('printArsipPembayaran');
     Route::get('/viewlaporan/laporanharian', [ViewLaporanController::class, 'laporanHarianView'])->name('laporanHarianView');
     Route::get('/viewlaporan/laporanharian/export', [ViewLaporanController::class, 'exportLaporanHarian'])->name('exportLaporanHarian');
     Route::get('/viewlaporan/laporanharian/detail', [ViewLaporanController::class, 'laporanHarianDetail'])->name('laporanHarianDetail');
@@ -51,10 +52,19 @@ Route::group(['middleware' => 'authmiddleware'], function () {
     Route::get('/viewlaporan/laporanperiode/export', [ViewLaporanController::class, 'exportLaporanPeriode'])->name('exportLaporanPeriode');
     Route::get('/viewlaporan/laporanperiode/detail', [ViewLaporanController::class, 'laporanPeriodeDetail'])->name('laporanPeriodeDetail');
     Route::get('/mastersistem/karyawan', [MasterSistemController::class, 'karyawanView'])->name('karyawanView');
+    Route::get('/mastersistem/karyawan/detail/{id_karyawan?}', [MasterSistemController::class, 'showKaryawan'])->name('showKaryawan');
+    Route::get('/mastersistem/karyawan/delete/{id_karyawan?}', [MasterSistemController::class, 'removeKaryawan'])->name('removeKaryawan');
+    Route::post('/mastersistem/karyawan/edit/{id_karyawan?}', [MasterSistemController::class, 'editKaryawan'])->name('editKaryawan');
     Route::get('/mastersistem/cabang', [MasterSistemController::class, 'cabangView'])->name('cabangView');
+    Route::get('/mastersistem/cabang/delete/{id_cabang?}', [MasterSistemController::class, 'deleteCabang'])->name('deleteCabang');
     Route::get('/mastersistem/kursus', [MasterSistemController::class, 'kursusView'])->name('kursusView');
+    Route::get('/mastersistem/kursus/delete/{id_kursus?}', [MasterSistemController::class, 'removeKursus'])->name('removeKursus');
     Route::get('/mastersistem/program', [MasterSistemController::class, 'programView'])->name('programView');
+    Route::get('/mastersistem/program/delete/{id_program?}', [MasterSistemController::class, 'removeProgram'])->name('removeProgram');
     Route::get('/mastersistem/jabatan', [MasterSistemController::class, 'jabatanView'])->name('jabatanView');
+    Route::get('/mastersistem/jabatan/delete/{id_jabatan}', [MasterSistemController::class, 'removeJabatan'])->name('removeJabatan');
+    Route::get('/mastersistem/biaya', [MasterSistemController::class, 'biayaView'])->name('biayaView');
+    Route::get('/mastersistem/biaya/delete/{id_biaya?}', [MasterSistemController::class, 'removeBiaya'])->name('removeBiaya');
     Route::get('/administrator', [AdministratorController::class, 'listAdminView'])->name('listAdminView');
     Route::post('/administrator/add', [AdministratorController::class, 'addAdmin'])->name('addAdmin');
     Route::get('/administrator/remove/{id_admin?}', [AdministratorController::class, 'removeAdmin'])->name('removeAdmin');
@@ -67,6 +77,7 @@ Route::group(['middleware' => 'authmiddleware'], function () {
     Route::post('/mastersistem/jabatan/add', [MasterSistemController::class, 'addJabatan'])->name('addJabatan');
     Route::post('/mastersistem/kursus/add', [MasterSistemController::class, 'addKursus'])->name('addKursus');
     Route::post('/mastersistem/program/add', [MasterSistemController::class, 'addProgram'])->name('addProgram');
+    Route::post('/mastersistem/biaya/add/{jenis_biaya}', [MasterSistemController::class, 'addBiaya'])->name('addBiaya');
 });
 
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Siswa extends Model
 {
@@ -22,4 +23,30 @@ class Siswa extends Model
         'no_telpon',
         'pendidikan',
     ];
+
+    public static function generateNis($cabang, $kursus)
+    {
+        $latest = DB::table('student')->latest()->first();
+        $tahun = substr(date('Y', time()), -2);
+        $bulan = date('m', time());
+        if (!$latest) {
+            $nourut = '01';
+            $nis = "$tahun$cabang$kursus$bulan$nourut";
+            return $nis;
+        }
+
+        $no = (int) substr($latest->nis, -2);
+        $bulan = substr($latest->nis, -4, 2);
+        
+        if ($bulan != date('m', time())) {
+            $no = '01';
+        } else {
+            $no++;
+        }
+
+        $bulanNow = date('m', time());
+        $nourut = str_pad($no,2,'0',STR_PAD_LEFT);
+        $nis = "$tahun$cabang$kursus$bulanNow$nourut";
+        return $nis;
+    }
 }

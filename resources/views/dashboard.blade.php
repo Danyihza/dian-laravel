@@ -23,7 +23,7 @@
                         </div>
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box zoom-in" onclick="window.location = '{{ route('arsipSiswaView') }}'">
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-feather="users"
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box zoom-in" onclick="window.location = '{{ route('programView') }}'">
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-feather="code"
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box zoom-in" onclick="window.location = '{{ route('cabangView') }}'">
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-feather="monitor" class="report-box__icon text-theme-12"></i>
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-                                <div class="report-box zoom-in">
+                                <div class="report-box zoom-in" onclick="window.location = '{{ route('listAdminView') }}'">
                                     <div class="box p-5">
                                         <div class="flex">
                                             <i data-feather="user-check" class="report-box__icon text-theme-9"></i>

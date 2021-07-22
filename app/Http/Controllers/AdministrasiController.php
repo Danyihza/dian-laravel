@@ -7,10 +7,12 @@ use App\Models\Detail_Pembayaran;
 use App\Models\Detail_Transaksi;
 use App\Models\Fk_detail_siswa;
 use App\Models\Kursus;
+use App\Models\Level;
 use App\Models\Pengeluaran;
 use App\Models\Program;
 use App\Models\Regencies;
 use App\Models\Siswa;
+use App\Models\Uang;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -21,7 +23,12 @@ class AdministrasiController extends Controller
     {
         $data['title'] = 'pendaftaran';
         $data['parent'] = 'administrasi';
+        $data['level'] = Level::all();
         $data['regencies'] = Regencies::all();
+        $data['uang_pendaftaran'] = Uang::where('jenis_uang', 'pendaftaran')->orderBy('jumlah', 'ASC')->get();
+        $data['uang_kursus'] = Uang::where('jenis_uang', 'kursus')->orderBy('jumlah', 'ASC')->get();
+        $data['uang_ujian'] = Uang::where('jenis_uang', 'ujian_sertifikat')->orderBy('jumlah', 'ASC')->get();
+        $data['uang_buku'] = Uang::where('jenis_uang', 'buku')->orderBy('jumlah', 'ASC')->get();
         $data['kursus'] = Kursus::orderBy('created_at', 'ASC')->get();
         $data['program'] = Program::orderBy('created_at', 'ASC')->get();
         if ($request->redirect_to) {
@@ -53,6 +60,7 @@ class AdministrasiController extends Controller
             $data['telah_dibayar'] += $detail_pembayaran->pembayaran_4 ?? 0;
         }
         $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'];
+        // dd($data['detail_kursus']->jumlah);
         $data['detail_pembayaran']  = $detail_pembayaran;
         $data['title'] = 'pembayaran';
         $data['parent'] = 'administrasi';
@@ -70,6 +78,30 @@ class AdministrasiController extends Controller
 
     public function daftar(Request $request)
     {
+        $request->validate([
+            'nis' => 'required',
+            'nama' => 'required',
+            'kota_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'alamat' => 'required',
+            'kota' => 'required',
+            'no_telepon' => 'required',
+            'pendidikan' => 'required',
+            'kursus' => 'required',
+            'program' => 'required',
+            'level' => 'required',
+            'hari_kursus' => 'required',
+            'jam_kursus' => 'required',
+            'no_urut' => 'required',
+            'nis' => 'required',
+            'uang_pendaftaran' => 'required',
+            'uang_kursus' => 'required',
+            'uang_ujian_sertifikat' => 'required',
+            'uang_buku' => 'required',
+            'jumlah' => 'required'
+        ], [
+            'required' => 'Semua Kolom Wajib Diisi'
+        ]);
         $newSiswa = new Siswa;
         $newDetailKursus = new Detail_Kursus;
         $newDetailPembayaran = new Detail_Pembayaran;
@@ -107,7 +139,6 @@ class AdministrasiController extends Controller
         $newDetailKursus->kursus = $request->kursus;
         $newDetailKursus->program = $request->program;
         $newDetailKursus->level = $request->level;
-        $newDetailKursus->catatan_kursus = $request->catatan_kursus;
         $newDetailKursus->hari_kursus = $hari_kursus;
         $newDetailKursus->jam_kursus = $request->jam_kursus;
         $newDetailKursus->no_urut = $request->no_urut;
