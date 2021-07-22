@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="{{ asset('assets') }}/css/app.css" />
         <link rel="stylesheet" href="{{ asset('assets') }}/css/font.css" />
         <link rel="stylesheet" href="{{ asset('assets') }}/css/datatables.min.css">
+        <link rel="stylesheet" href="{{ asset('assets') }}/css/buttons.dataTables.min.css">
+        
         <!-- END: CSS Assets-->
     </head>
     <!-- END: Head -->

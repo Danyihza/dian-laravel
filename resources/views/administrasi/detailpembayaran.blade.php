@@ -1,5 +1,5 @@
 @extends('template')
-@section('title', 'Dashboard')
+@section('title', ucwords($title))
 @section('body')
 
 <body class="app">
