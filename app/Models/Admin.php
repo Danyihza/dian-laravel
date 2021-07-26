@@ -19,4 +19,9 @@ class Admin extends Model
         'cabang',
         'level',
     ];
+
+    public function hasCabang()
+    {
+        return $this->hasOne(Cabang::class, 'id_cabang', 'cabang');
+    }
 }

@@ -106,19 +106,10 @@
                                             <select name="level" data-search="true" class="tail-select w-full">
                                                 <option value="0" selected>Pilih Level</option>
                                                 @foreach($level as $lvl)
-                                                    <option value="{{ $lvl }}" {{ $lvl == $detail->hasDetailKursus->level ? 'selected' : '' }}>{{$lvl}}</option>
+                                                    <option value="{{ $lvl->id_level }}" {{ $lvl->id_level == $detail->hasDetailKursus->level ? 'selected' : '' }}>{{$lvl->nama_level}}</option>
                                                 @endforeach
-                                                <option value="Basic">Basic</option>
-                                                <option value="Intermediate">Intermediate</option>
-                                                <option value="Expert">Expert</option>
                                             </select> 
                                         </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <label class="flex flex-col sm:flex-row"> 
-                                            Catatan Kursus 
-                                        </label> 
-                                        <textarea class="input w-full border mt-2" name="catatan_kursus" placeholder="Masukkan Catatan Kursus" rows="5">{{ $detail->hasDetailKursus->catatan_kursus }}</textarea>
                                     </div>
                                     <div class="mt-3">
                                         <label>Hari Kursus</label>

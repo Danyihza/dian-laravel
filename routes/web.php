@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdministrasiController;
 use App\Http\Controllers\AdministratorController;
+use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MasterSistemController;
@@ -78,10 +79,14 @@ Route::group(['middleware' => 'authmiddleware'], function () {
     Route::post('/mastersistem/kursus/add', [MasterSistemController::class, 'addKursus'])->name('addKursus');
     Route::post('/mastersistem/program/add', [MasterSistemController::class, 'addProgram'])->name('addProgram');
     Route::post('/mastersistem/biaya/add/{jenis_biaya}', [MasterSistemController::class, 'addBiaya'])->name('addBiaya');
+
+    Route::get('/printnota', [AdministrasiController::class, 'printNota'])->name('prinNotaPembayaran');
 });
 
 
-
+Route::group(['prefix' => 'dev/config/'], function () {
+    Route::get('/runseed', [ArtisanController::class, 'runSeeder'])->name('runSeeder');
+});
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // });

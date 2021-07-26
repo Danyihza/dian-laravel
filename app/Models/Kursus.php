@@ -14,4 +14,5 @@ class Kursus extends Model
         'id_kursus',
         'nama_kursus',
     ];
+    public $timestamps = true;
 }

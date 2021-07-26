@@ -28,6 +28,8 @@ class Siswa extends Model
     {
         $latest = DB::table('student')->latest()->first();
         $tahun = substr(date('Y', time()), -2);
+        $cabang = str_pad($cabang,2,'0',STR_PAD_LEFT);
+        $kursus = str_pad($kursus,2,'0',STR_PAD_LEFT);
         $bulan = date('m', time());
         if (!$latest) {
             $nourut = '01';

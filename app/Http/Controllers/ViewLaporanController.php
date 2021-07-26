@@ -7,6 +7,7 @@ use App\Models\Detail_Pembayaran;
 use App\Models\Detail_Transaksi;
 use App\Models\Fk_detail_siswa;
 use App\Models\Kursus;
+use App\Models\Level;
 use App\Models\Program;
 use App\Models\Regencies;
 use App\Models\Siswa;
@@ -70,9 +71,7 @@ class ViewLaporanController extends Controller
             'S2',
             'S3'
         ];
-        $data['level'] = [
-            'Basic', 'Intermediate', 'Expert'
-        ];
+        $data['level'] = Level::all();
         $data['hari'] = [
             'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'
         ];

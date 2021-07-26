@@ -16,4 +16,5 @@ class Cabang extends Model
         'kota',
         'alamat'
     ];
+    public $timestamps = true;
 }

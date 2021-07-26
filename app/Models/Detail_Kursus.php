@@ -32,6 +32,11 @@ class Detail_Kursus extends Model
         return $this->hasOne(Kursus::class, 'id_kursus', 'kursus');
     }
 
+    public function hasLevel()
+    {
+        return $this->hasOne(Level::class, 'id_level', 'level');
+    }
+
     public function hasProgram()
     {
         return $this->hasOne(Program::class, 'id_program', 'program');

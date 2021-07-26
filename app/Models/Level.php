@@ -14,4 +14,5 @@ class Level extends Model
         'id_level',
         'nama_level',
     ];
+    public $timestamps = true;
 }

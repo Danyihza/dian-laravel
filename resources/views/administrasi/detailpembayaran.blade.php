@@ -68,7 +68,7 @@
                                                 :
                                             </td>
                                             <td class="font-medium">
-                                                {{$detail_kursus->level != 0 ? $detail_kursus->level : '-'}}
+                                                {{$detail_kursus->level != 0 ? $detail_kursus->hasLevel->nama_level : '-'}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -172,26 +172,26 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <form action="{{ route('bayarPendidikan') }}" method="post">
+                                    <form action="{{ route('bayarPendidikan') }}" method="post" onsubmit="print()">
                                         @csrf
-                                        <input type="hidden" name="id_siswa" value="{{$siswa->id_siswa}}">
-                                        <input type="hidden" name="id_detail_kursus" value="{{$detail_kursus->id_detail}}">
+                                        <input type="hidden" id="id_siswa" name="id_siswa" value="{{$siswa->id_siswa}}">
+                                        <input type="hidden" id="id_detail_kursus" name="id_detail_kursus" value="{{$detail_kursus->id_detail}}">
                                         <div class="mt-10">
                                             <label class="flex flex-col sm:flex-row">Tanggal Pembayaran</label>
-                                            <input class="mt-2 datepicker input w-full border block" name="tanggal_pembayaran" data-single-mode="true">
+                                            <input class="mt-2 input w-full border block" id="tanggal_pembayaran" value={{$tanggal}} name="tanggal_pembayaran" readonly>
                                         </div>
                                         <div class="mt-3">
                                             <label class="flex flex-col sm:flex-row">Dibayar Sebesar</label>
-                                            <input type="text" class="input w-full border mt-2" name="dibayar" placeholder="Masukkan Besar Pembayaran" required>
+                                            <input type="text" class="input w-full border mt-2" id="jumlah" name="dibayar" placeholder="Masukkan Besar Pembayaran" required>
                                         </div>
                                         <div class="mt-3">
                                             <label class="flex flex-col sm:flex-row"> 
                                                 Keterangan
                                             </label> 
-                                            <textarea class="input w-full border mt-2" name="keterangan" placeholder="Masukkan Catatan Kursus" rows="5"></textarea>
+                                            <textarea class="input w-full border mt-2" name="keterangan" placeholder="Masukkan Keterangan Pembayaran" rows="5" required></textarea>
                                         </div>
                                         <div class="text-right mt-5">
-                                            <button type="button" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cancel</button>
+                                            <button type="button" onclick="location.href = '{{ route('pembayaranView') }}'" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cancel</button>
                                             <button type="submit" class="button w-24 bg-theme-1 text-white">Simpan</button>
                                         </div>
                                     </form>
@@ -219,5 +219,19 @@
     });
 </script>
 <script>
+    function print(){
+        const confirm = window.confirm('Apakah anda ingin mencetak nota pembayaran ?');
+        if (confirm) {
+            const id_siswa = document.getElementById('id_siswa').value;
+            const id_detail_kursus = document.getElementById('id_detail_kursus').value;
+            const tanggal = document.getElementById('tanggal_pembayaran').value;
+            const jumlah = document.getElementById('jumlah').value;
+            window.open(`{{ route('prinNotaPembayaran') }}?s=${id_siswa}&d=${id_detail_kursus}&j=${jumlah}&t=${tanggal}`)
+            return true;
+        }else{
+            return true;
+        }
+    }
+
 </script>
 @endsection

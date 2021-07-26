@@ -69,7 +69,7 @@
                                                 :
                                             </td>
                                             <td class="font-medium">
-                                                {{$detail_kursus->level != 0 ? $detail_kursus->level : '-'}}
+                                                {{$detail_kursus->level != 0 ? $detail_kursus->hasLevel->nama_level : '-'}}
                                             </td>
                                         </tr>
                                         <tr>

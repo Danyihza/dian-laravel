@@ -14,4 +14,5 @@ class Program extends Model
         'id_program',
         'nama_program',
     ];
+    public $timestamps = true;
 }
