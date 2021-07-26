@@ -148,11 +148,11 @@
                                     </div>
                                     <div class="mt-3">
                                         <label>No Urut</label>
-                                        <input type="text" class="input w-full border mt-2" name="no_urut" id="no_urut" placeholder="Pilih Kursus untuk menampilkan nomor urut" readonly required>
+                                        <input type="text" class="input w-full border mt-2" name="no_urut" id="no_urut" placeholder="Pilih Program untuk menampilkan nomor urut" readonly required>
                                     </div>
                                     <div class="my-3">
                                         <label>NIS</label>
-                                        <input type="text" class="input w-full border mt-2" id="nis" name="nis" placeholder="Pilih Kursus untuk menampilkan NIS" readonly required>
+                                        <input type="text" class="input w-full border mt-2" id="nis" name="nis" placeholder="Pilih Program untuk menampilkan NIS" readonly required>
                                     </div>
                                     <div class="border-b border-gray-200"></div>
                                     <div class="mt-3">
