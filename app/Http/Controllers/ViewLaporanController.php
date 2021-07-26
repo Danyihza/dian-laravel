@@ -135,6 +135,8 @@ class ViewLaporanController extends Controller
         $id_detail_kursus = $request->d;
 
         Fk_detail_siswa::where('id_siswa', $id_siswa)->where('id_detail_kursus', $id_detail_kursus)->delete();
+        Siswa::where('id_siswa', $id_siswa)->delete();
+        Detail_Kursus::where('id_detail', $id_detail_kursus)->delete();
         return Redirect::back()->with('success', 'Data Siswa Berhasil Dihapus');
     }
 

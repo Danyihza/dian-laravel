@@ -93,7 +93,7 @@
                                     <div> 
                                         <label>Kursus</label>
                                         <div class="mt-2"> 
-                                            <select name="kursus" id="kursus" data-search="true" onchange="getNis()" class="tail-select w-full" required>
+                                            <select name="kursus" id="kursus" data-search="true" class="tail-select w-full" required>
                                                 <option value="" selected>Pilih Kursus</option>
                                                 @foreach($kursus as $krs)
                                                     <option value="{{$krs->id_kursus}}">{{$krs->nama_kursus}}</option>
@@ -104,7 +104,7 @@
                                     <div class="mt-3"> 
                                         <label>Program</label>
                                         <div class="mt-2"> 
-                                            <select name="program" data-search="true" class="tail-select w-full" required>
+                                            <select name="program" id="program" data-search="true" onchange="getNis()" class="tail-select w-full" required>
                                                 <option value="" selected>Pilih Program</option>
                                                 @foreach ($program as $prg)
                                                     <option value="{{ $prg->id_program }}">{{ $prg->nama_program }}</option>
@@ -260,7 +260,7 @@
 
     async function getNis(){
         const cabang = {{ session('login-data')['cabang'] }};
-        const kursus = document.getElementById('kursus').value;
+        const program = document.getElementById('program').value;
         const inputnis = document.getElementById('nis');
         const no_urut = document.getElementById('no_urut');
         const nis = await fetch("{{ route('api.getnis') }}", {
@@ -271,7 +271,7 @@
             },
             body: JSON.stringify({
                 cabang: cabang,
-                kursus: kursus
+                program: program
             })
         })
         .then(res => res.json())
