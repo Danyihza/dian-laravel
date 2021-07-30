@@ -199,22 +199,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    {{-- <div class="mt-3">
-                                        <label>Uang Pendaftaran</label>
-                                        <input type="text" onchange="hitungJumlah()" id="uang_pendaftaran" class="harga input w-full border mt-2" name="uang_pendaftaran" placeholder="Masukkan Uang Pendaftaran">
-                                    </div>
-                                    <div class="mt-3">
-                                        <label>Uang Kursus</label>
-                                        <input type="text" onchange="hitungJumlah()" id="uang_kursus" class="harga input w-full border mt-2" name="uang_kursus" placeholder="Masukkan Uang Kursus">
-                                    </div>
-                                    <div class="mt-3">
-                                        <label>Uang Ujian & Sertifikat</label>
-                                        <input type="text" onchange="hitungJumlah()" id="uang_ujian_sertifikat" class="harga input w-full border mt-2" name="uang_ujian_sertifikat" placeholder="Masukkan Uang Ujian & Sertifikat">
-                                    </div>
-                                    <div class="mt-3">
-                                        <label>Uang Buku</label>
-                                        <input type="text" onchange="hitungJumlah()" id="uang_buku" class="harga input w-full border mt-2" name="uang_buku" placeholder="Masukkan Uang Buku">
-                                    </div> --}}
                                     <div class="mt-3">
                                         <label>Jumlah</label>
                                         <input type="text" id="jumlah" class="input w-full border mt-2" name="jumlah" placeholder="Jumlah akan ditampilkan jika seluruh biaya sudah terinput" readonly required>

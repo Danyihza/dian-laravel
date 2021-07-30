@@ -19,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '9c9c16431937fa6a4c8137ee2a301a82d9291650',
+    'reference' => '747639fea9ad3d0962713d424b1b269d7f58e152',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -444,6 +444,15 @@ private static $installed = array (
         0 => 'v8.49.1',
       ),
     ),
+    'itsgoingd/clockwork' => 
+    array (
+      'pretty_version' => 'v5.0.8',
+      'version' => '5.0.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '01686ebbf75d8e121dfb1b60e52f334858793830',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -467,7 +476,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '9c9c16431937fa6a4c8137ee2a301a82d9291650',
+      'reference' => '747639fea9ad3d0962713d424b1b269d7f58e152',
     ),
     'laravel/sail' => 
     array (
