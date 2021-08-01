@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 01, 2021 at 07:33 PM
+-- Generation Time: Aug 01, 2021 at 07:46 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -97,14 +97,6 @@ CREATE TABLE `detail_kursus` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `detail_kursus`
---
-
-INSERT INTO `detail_kursus` (`id_detail`, `kursus`, `program`, `level`, `catatan_kursus`, `hari_kursus`, `jam_kursus`, `no_urut`, `uang_pendaftaran`, `uang_kursus`, `uang_ujian_sertifikat`, `uang_buku`, `uang_peralatan`, `jumlah`, `tanggal_daftar`, `created_at`, `updated_at`) VALUES
-('fa84gEBs1QoR5nlRzzK86EAwvM7n722x', 2, 2, 1, NULL, 'Senin,Selasa,Rabu,Jumat,Sabtu', '12:00', 1, 75000, 250000, 75000, 80000, 400000, 880000, '2021-07-31 17:00:00', '2021-08-01 10:03:29', '2021-08-01 15:14:24'),
-('tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', 3, 1, 3, NULL, 'Senin,Rabu,Jumat', '12:00', 2, 75000, 6000000, 75000, 80000, 90000, 6320000, '2021-08-01 17:00:00', '2021-08-01 13:32:18', '2021-08-01 15:14:51');
-
 -- --------------------------------------------------------
 
 --
@@ -123,13 +115,6 @@ CREATE TABLE `detail_pembayaran` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `detail_pembayaran`
---
-
-INSERT INTO `detail_pembayaran` (`id_detail_pembayaran`, `id_siswa`, `id_detail_kursus`, `pembayaran_1`, `pembayaran_2`, `pembayaran_3`, `pembayaran_4`, `tanggal`, `created_at`, `updated_at`) VALUES
-(9, 'sppxhokrUJFlDoaiFUefkjqwkvjIqEsj', 'JCaXVLEAko2mMVbJEIHDDCDpZZ1i08ef', 1000000, 130000, NULL, NULL, NULL, '2021-07-26 02:06:09', '2021-07-26 02:06:31');
 
 -- --------------------------------------------------------
 
@@ -171,14 +156,6 @@ CREATE TABLE `fk_detail_siswa` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `fk_detail_siswa`
---
-
-INSERT INTO `fk_detail_siswa` (`id_siswa`, `id_detail_kursus`, `id_cabang`, `created_at`, `updated_at`) VALUES
-('xiHanhXeuFmjU7cusKChpQQIgCykpXK6', 'fa84gEBs1QoR5nlRzzK86EAwvM7n722x', 2, '2021-08-01 10:03:29', '2021-08-01 10:03:29'),
-('Eq4MAhMVtX4aeh0K0cO4R6RRUNPW7MKG', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', 2, '2021-08-01 13:32:18', '2021-08-01 13:32:18');
 
 -- --------------------------------------------------------
 
@@ -276,15 +253,6 @@ CREATE TABLE `pembayaran` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `pembayaran`
---
-
-INSERT INTO `pembayaran` (`id_pembayaran`, `id_detail_kursus`, `tanggal_pembayaran`, `bayar`, `keterangan`, `pembayaran_ke`, `created_at`, `updated_at`) VALUES
-('DI-II/01/08/2021/01', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', '2021-07-31 17:00:00', 1000000, 'pertama', 1, '2021-08-01 13:39:56', '2021-08-01 13:47:00'),
-('DI-II/01/08/2021/02', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', '2021-07-31 17:00:00', 5000000, '2', 2, '2021-08-01 13:42:41', '2021-08-01 13:42:41'),
-('DI-II/02/08/2021/01', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', '2021-08-01 17:00:00', 120000, 'ke 3', 3, '2021-08-01 17:11:20', '2021-08-01 17:11:20');
-
 -- --------------------------------------------------------
 
 --
@@ -300,13 +268,6 @@ CREATE TABLE `pengeluaran` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `pengeluaran`
---
-
-INSERT INTO `pengeluaran` (`id_pengeluaran`, `rincian`, `biaya`, `cabang`, `tanggal`, `created_at`, `updated_at`) VALUES
-('q9wAozlESlxBm35ft3WgXVbLapAjs0Bb', 'tes1', 20000, 2, '2021-07-31 17:00:00', '2021-08-01 15:49:43', '2021-08-01 15:49:43');
 
 -- --------------------------------------------------------
 
@@ -885,14 +846,6 @@ CREATE TABLE `student` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`id_siswa`, `nis`, `nama`, `kota_lahir`, `tanggal_lahir`, `alamat`, `kota_tinggal`, `no_telpon`, `pendidikan`, `created_at`, `updated_at`) VALUES
-('Eq4MAhMVtX4aeh0K0cO4R6RRUNPW7MKG', '2102030802', 'Arini Firdausiyah', '1101', '2021-07-31 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '1106', '082331147549', 'S1', '2021-08-01 13:32:18', '2021-08-01 15:14:51'),
-('xiHanhXeuFmjU7cusKChpQQIgCykpXK6', '2102020801', 'Dany Ahmad Ihza Prakoso', '1101', '2007-08-30 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '1106', '082331147549', 'S3', '2021-08-01 10:03:29', '2021-08-01 15:14:24');
-
 -- --------------------------------------------------------
 
 --
@@ -1049,7 +1002,7 @@ ALTER TABLE `cabang`
 -- AUTO_INCREMENT for table `detail_pembayaran`
 --
 ALTER TABLE `detail_pembayaran`
-  MODIFY `id_detail_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_detail_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kursus`
