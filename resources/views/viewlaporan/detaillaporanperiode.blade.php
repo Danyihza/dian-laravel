@@ -23,10 +23,11 @@
                                 <th class="text-center whitespace-no-wrap">KETERANGAN</th>
                                 <th class="text-center whitespace-no-wrap">PEMASUKAN</th>
                                 <th class="text-center whitespace-no-wrap">PENGELUARAN</th>
+                                <th class="text-center whitespace-no-wrap">SALDO</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($transaksi as $trans)
+                            @foreach($transaksi as $key => $trans)
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
@@ -45,12 +46,14 @@
                                 <td class="text-center">
                                     <span class="font-medium">{{ $trans->jenis_transaksi == 'Pengeluaran' ? $trans->jumlah : '' }}</span>
                                 </td>
+                                <td class="text-center">
+                                    <span class="font-medium">{{ $saldos[$key] }}</span>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <div class="mt-5">
-                        <button type="button" onclick="window.print()" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cetak</button>
                         <a href="{{ route('exportLaporanPeriode') }}?from={{ $dari }}&to={{ $sampai }}" class="button w-24 bg-theme-1 text-white">Simpan</a>
                         <a href="{{ route('laporanHarianView') }}" class="button w-24 bg-theme-1 text-white">Kembali</a>
                     </div>

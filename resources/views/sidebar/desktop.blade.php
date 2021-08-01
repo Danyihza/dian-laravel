@@ -117,16 +117,20 @@
                         <div class="side-menu__title"> Biaya </div>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('levelView') }}" class="side-menu {{ $title == 'Level' ? 'side-menu--active' : ''}}">
+                        <div class="side-menu__icon"> <i data-feather="hexagon"></i> </div>
+                        <div class="side-menu__title"> Level </div>
+                    </a>
+                </li>
             </ul>
         </li>
-        @if(session('login-data')['level'] == 'Super')
         <li>
             <a href="{{ route('listAdminView') }}" class="side-menu {{ $title == 'Administrator' ? 'side-menu--active' : ''}}">
                 <div class="side-menu__icon"> <i data-feather="user-check"></i> </div>
                 <div class="side-menu__title"> Admin </div>
             </a>
         </li>
-        @endif
     </ul>
 </nav>
 <!-- END: Side Menu -->

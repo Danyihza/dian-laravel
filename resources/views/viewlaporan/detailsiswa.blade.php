@@ -81,39 +81,39 @@
                                     <div> 
                                         <label>Kursus</label>
                                         <div class="mt-2"> 
-                                            <select name="kursus" data-search="true" class="tail-select w-full">
-                                                <option value="0" selected>Pilih Kursus</option>
-                                                @foreach($kursus as $krs)
+                                            <select name="kursus" class="tail-select w-full">
+                                                <option value="{{ $detail->hasDetailKursus->kursus }}" selected>{{ $detail->hasDetailKursus->hasKursus->nama_kursus }}</option>
+                                                {{-- @foreach($kursus as $krs)
                                                     <option value="{{$krs->id_kursus}}" {{$krs->id_kursus == $detail->hasDetailKursus->kursus ? 'selected' : ''}}>{{$krs->nama_kursus}}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select> 
                                         </div>
                                     </div>
                                     <div class="mt-3"> 
                                         <label>Program</label>
                                         <div class="mt-2"> 
-                                            <select name="program" data-search="true" class="tail-select w-full">
-                                                <option value="0" selected>Pilih Program</option>
-                                                @foreach ($program as $prg)
+                                            <select name="program" class="tail-select w-full">
+                                                <option value="{{ $detail->hasDetailKursus->program }}" selected>{{ $detail->hasDetailKursus->hasProgram->nama_program }}</option>
+                                                {{-- @foreach ($program as $prg)
                                                     <option value="{{ $prg->id_program }}" {{$prg->id_program == $detail->hasDetailKursus->program ? 'selected' : ''}}>{{ $prg->nama_program }}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select> 
                                         </div>
                                     </div>
                                     <div class="mt-3"> 
                                         <label>Level</label>
                                         <div class="mt-2"> 
-                                            <select name="level" data-search="true" class="tail-select w-full">
-                                                <option value="0" selected>Pilih Level</option>
-                                                @foreach($level as $lvl)
+                                            <select name="level" class="tail-select w-full">
+                                                <option value="{{ $detail->hasDetailKursus->level }}" selected>{{ $detail->hasDetailKursus->hasLevel->nama_level }}</option>
+                                                {{-- @foreach($level as $lvl)
                                                     <option value="{{ $lvl->id_level }}" {{ $lvl->id_level == $detail->hasDetailKursus->level ? 'selected' : '' }}>{{$lvl->nama_level}}</option>
-                                                @endforeach
+                                                @endforeach --}}
                                             </select> 
                                         </div>
                                     </div>
                                     <div class="mt-3">
                                         <label>Hari Kursus</label>
-                                        <select data-placeholder="Pilih Hari Kursus" data-search="true" name="hari_kursus[]" class="tail-select w-full" multiple required>
+                                        <select data-placeholder="Pilih Hari Kursus" name="hari_kursus[]" class="tail-select w-full" multiple required>
                                             @foreach($hariTerpilih as $ht)
                                                 <option value="{{$ht}}" selected>{{$ht}}</option>
                                             @endforeach
@@ -128,11 +128,11 @@
                                     </div>
                                     <div class="mt-3">
                                         <label>No Urut</label>
-                                        <input type="text" class="input w-full border mt-2" name="no_urut" value="{{ $detail->hasDetailKursus->no_urut }}" placeholder="Masukkan No Urut" required>
+                                        <input type="text" class="input w-full border mt-2" name="no_urut" value="{{ $detail->hasDetailKursus->no_urut }}" placeholder="Masukkan No Urut" required readonly>
                                     </div>
                                     <div class="my-3">
                                         <label>NIS</label>
-                                        <input type="text" class="input w-full border mt-2" name="nis" value="{{ $detail->hasSiswa->nis }}"placeholder="Masukkan NIS" required>
+                                        <input type="text" class="input w-full border mt-2" name="nis" value="{{ $detail->hasSiswa->nis }}" placeholder="Masukkan NIS" required readonly>
                                     </div>
                                     <div class="text-right mt-5">
                                         <a href={{ route('arsipSiswaView') }} class="button w-24 p-3 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cancel</a>

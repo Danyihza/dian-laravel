@@ -9,6 +9,7 @@ use App\Models\Detail_Transaksi;
 use App\Models\Fk_detail_siswa;
 use App\Models\Kursus;
 use App\Models\Level;
+use App\Models\Pembayaran;
 use App\Models\Pengeluaran;
 use App\Models\Program;
 use App\Models\Regencies;
@@ -49,21 +50,43 @@ class AdministrasiController extends Controller
         return view('administrasi.pembayaran', $data);
     }
 
+    // public function detailPembayaranView($id_siswa, $id_detail_kursus)
+    // {
+    //     $data['siswa'] = Siswa::where('id_siswa', $id_siswa)->first();
+    //     $data['detail_kursus'] = Detail_Kursus::where('id_detail', $id_detail_kursus)->first();
+    //     $detail_pembayaran = Detail_Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('id_siswa', $id_siswa)->first();
+    //     $data['telah_dibayar'] = 0;
+    //     if ($detail_pembayaran) {
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_1;
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_2 ?? 0;
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_3 ?? 0;
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_4 ?? 0;
+    //     }
+    //     $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'];
+    //     // dd($data['detail_kursus']->jumlah);
+    //     $data['detail_pembayaran']  = $detail_pembayaran;
+    //     $data['tanggal'] = date('d/m/Y');
+    //     $data['title'] = 'pembayaran';
+    //     $data['parent'] = 'administrasi';
+    //     $data['extra'] = 'Pembayaran Siswa';
+    //     return view('administrasi.detailpembayaran', $data);
+    // }
     public function detailPembayaranView($id_siswa, $id_detail_kursus)
     {
         $data['siswa'] = Siswa::where('id_siswa', $id_siswa)->first();
         $data['detail_kursus'] = Detail_Kursus::where('id_detail', $id_detail_kursus)->first();
-        $detail_pembayaran = Detail_Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('id_siswa', $id_siswa)->first();
+        $pembayaran = Pembayaran::where('id_detail_kursus', $id_detail_kursus)->orderBy('pembayaran_ke', 'ASC')->get();
         $data['telah_dibayar'] = 0;
-        if ($detail_pembayaran) {
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_1;
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_2 ?? 0;
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_3 ?? 0;
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_4 ?? 0;
+        if ($pembayaran) {
+            foreach ($pembayaran as $pby) {
+                $data['telah_dibayar'] += $pby->bayar;
+            }
         }
         $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'];
-        // dd($data['detail_kursus']->jumlah);
-        $data['detail_pembayaran']  = $detail_pembayaran;
+        if ($data['sisa_pembayaran'] == 0) {
+            return redirect()->back()->with('error', 'Siswa ini telah membayar seluruh tagihan');
+        }
+        $data['detail_pembayaran']  = $pembayaran;
         $data['tanggal'] = date('d/m/Y');
         $data['title'] = 'pembayaran';
         $data['parent'] = 'administrasi';
@@ -101,6 +124,7 @@ class AdministrasiController extends Controller
             'uang_kursus' => 'required',
             'uang_ujian_sertifikat' => 'required',
             'uang_buku' => 'required',
+            'uang_peralatan' => 'required',
             'jumlah' => 'required'
         ], [
             'required' => 'Semua Kolom Wajib Diisi'
@@ -149,11 +173,13 @@ class AdministrasiController extends Controller
         $newDetailKursus->uang_kursus = $request->uang_kursus;
         $newDetailKursus->uang_ujian_sertifikat = $request->uang_ujian_sertifikat;
         $newDetailKursus->uang_buku = $request->uang_buku;
+        $newDetailKursus->uang_peralatan = $request->uang_peralatan;
         $newDetailKursus->jumlah = $request->jumlah;
         $newDetailKursus->tanggal_daftar = $tanggal_daftar[2] . '-' . $tanggal_daftar[1] . '-' . $tanggal_daftar[0];
 
         $newDetailSiswa->id_siswa = $id_siswa;
         $newDetailSiswa->id_detail_kursus = $id_detail_kursus;
+        $newDetailSiswa->id_cabang = session('login-data')['cabang'];
 
         $newSiswa->save();
         $newDetailKursus->save();
@@ -165,49 +191,132 @@ class AdministrasiController extends Controller
         return redirect()->route('pembayaranView')->with('success', 'Siswa baru berhasil didaftarkan');
     }
 
+    // public function bayarPendidikan(Request $request)
+    // {
+    //     $id_siswa = $request->id_siswa;
+    //     $id_detail_kursus = $request->id_detail_kursus;
+    //     $tanggal = explode('/', $request->tanggal_pembayaran);
+    //     $time = strtotime($tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0]);
+    //     // dd($time);
+    //     $detail_pembayaran = Detail_Pembayaran::where('id_siswa', $id_siswa)->where('id_detail_kursus', $id_detail_kursus)->first();
+    //     // $no_transaksi = str_pad(Detail_Transaksi::generateId($time),2,'0',STR_PAD_LEFT);
+    //     // dd($no_transaksi);
+    //     // dd($detail_pembayaran->pembayaran_2);
+    //     if ($detail_pembayaran) {
+    //         if ($detail_pembayaran->pembayaran_3 != null) {
+    //             $detail_pembayaran->pembayaran_4 = $request->dibayar;
+    //             $detail_pembayaran->save();
+    //         } else {
+    //             if ($detail_pembayaran->pembayaran_2 != null) {
+    //                 $detail_pembayaran->pembayaran_3 = $request->dibayar;
+    //                 $detail_pembayaran->save();
+    //             } else {
+    //                 $detail_pembayaran->pembayaran_2 = $request->dibayar;
+    //                 $detail_pembayaran->save();
+    //             }
+    //         }
+    //     } else {
+    //         $newDetailPembayaran = new Detail_Pembayaran;
+    //         $newDetailPembayaran->id_siswa = $id_siswa;
+    //         $newDetailPembayaran->id_detail_kursus = $id_detail_kursus;
+    //         $newDetailPembayaran->pembayaran_1 = $request->dibayar;
+    //         $newDetailPembayaran->save();
+    //     }
+
+    //     // $nourut = str_pad($no,2,'0',STR_PAD_LEFT);
+
+    //     $newDetailTransaksi = new Detail_Transaksi;
+    //     $newDetailTransaksi->id_detail_transaksi = 'DI' . '-' . self::numberToRomanRepresentation(session('login-data')['cabang']) . '/' . $request->tanggal_pembayaran . '/' . Detail_Transaksi::generateID($time);
+    //     $newDetailTransaksi->tanggal = $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
+    //     $newDetailTransaksi->keterangan = $request->keterangan;
+    //     $newDetailTransaksi->jenis_transaksi = 'Pemasukan';
+    //     $newDetailTransaksi->jumlah = $request->dibayar;
+    //     $newDetailTransaksi->save();
+    //     return Redirect::route('arsipPembayaranView')->with('success', 'Pembayaran Berhasil');
+    // }
+
     public function bayarPendidikan(Request $request)
     {
-        $id_siswa = $request->id_siswa;
         $id_detail_kursus = $request->id_detail_kursus;
         $tanggal = explode('/', $request->tanggal_pembayaran);
+        $bayar = $request->dibayar;
+        $keterangan = $request->keterangan;
         $time = strtotime($tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0]);
-        // dd($time);
-        $detail_pembayaran = Detail_Pembayaran::where('id_siswa', $id_siswa)->where('id_detail_kursus', $id_detail_kursus)->first();
-        // $no_transaksi = str_pad(Detail_Transaksi::generateId($time),2,'0',STR_PAD_LEFT);
-        // dd($no_transaksi);
-        // dd($detail_pembayaran->pembayaran_2);
-        if ($detail_pembayaran) {
-            if ($detail_pembayaran->pembayaran_3 != null) {
-                $detail_pembayaran->pembayaran_4 = $request->dibayar;
-                $detail_pembayaran->save();
-            } else {
-                if ($detail_pembayaran->pembayaran_2 != null) {
-                    $detail_pembayaran->pembayaran_3 = $request->dibayar;
-                    $detail_pembayaran->save();
-                } else {
-                    $detail_pembayaran->pembayaran_2 = $request->dibayar;
-                    $detail_pembayaran->save();
-                }
-            }
+        $pembayaran = Pembayaran::where('id_detail_kursus', $id_detail_kursus)->orderBy('pembayaran_ke', 'DESC')->first();
+        $id_pembayaran = self::generateIdPembayaran(session('login-data')['cabang'], $request->tanggal_pembayaran, $time);
+
+        $newPembayaran = new Pembayaran;
+        $newPembayaran->id_pembayaran = $id_pembayaran;
+        $newPembayaran->id_detail_kursus = $id_detail_kursus;
+        $newPembayaran->tanggal_pembayaran = $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
+        $newPembayaran->bayar = $bayar;
+        $newPembayaran->keterangan = $keterangan;
+        if ($pembayaran) {
+            $newPembayaran->pembayaran_ke = $pembayaran->pembayaran_ke + 1;
         } else {
-            $newDetailPembayaran = new Detail_Pembayaran;
-            $newDetailPembayaran->id_siswa = $id_siswa;
-            $newDetailPembayaran->id_detail_kursus = $id_detail_kursus;
-            $newDetailPembayaran->pembayaran_1 = $request->dibayar;
-            $newDetailPembayaran->save();
+            $newPembayaran->pembayaran_ke = 1;
         }
-        
-        // $nourut = str_pad($no,2,'0',STR_PAD_LEFT);
-        
+
         $newDetailTransaksi = new Detail_Transaksi;
-        $newDetailTransaksi->id_detail_transaksi = 'DI' . '-' . self::numberToRomanRepresentation(session('login-data')['cabang']) . '/' . $request->tanggal_pembayaran . '/' . Detail_Transaksi::generateID($time);
+        $newDetailTransaksi->id_detail_transaksi = $id_pembayaran;
         $newDetailTransaksi->tanggal = $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
-        $newDetailTransaksi->keterangan = $request->keterangan;
+        $newDetailTransaksi->keterangan = $keterangan;
         $newDetailTransaksi->jenis_transaksi = 'Pemasukan';
-        $newDetailTransaksi->jumlah = $request->dibayar;
+        $newDetailTransaksi->jumlah = $bayar;
+        $newDetailTransaksi->cabang = session('login-data')['cabang'];
+
+        $newPembayaran->save();
         $newDetailTransaksi->save();
+
         return Redirect::route('arsipPembayaranView')->with('success', 'Pembayaran Berhasil');
     }
+
+    // public function printNota(Request $request)
+    // {
+    //     $id_siswa = $request->s;
+    //     $id_detail_kursus = $request->d;
+    //     $tanggal = $request->t;
+    //     $tang = explode('/', $tanggal);
+    //     $time = strtotime($tang[2] . '-' . $tang[1] . '-' . $tang[0]);
+    //     $data['jumlah_bayar'] = $request->j;
+    //     // dd(Crypt::decryptString($request->j));
+    //     $data['cabang'] = Cabang::where('id_cabang', session('login-data')['cabang'])->first();
+    //     $data['siswa'] = Siswa::where('id_siswa', $id_siswa)->first();
+    //     $data['detail_kursus'] = Detail_Kursus::where('id_detail', $id_detail_kursus)->first();
+    //     $detail_pembayaran = Detail_Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('id_siswa', $id_siswa)->first();
+    //     $data['telah_dibayar'] = 0;
+    //     if ($detail_pembayaran) {
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_1;
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_2 ?? 0;
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_3 ?? 0;
+    //         $data['telah_dibayar'] += $detail_pembayaran->pembayaran_4 ?? 0;
+    //     }
+    //     $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'] - $data['jumlah_bayar'];
+    //     // dd($data['detail_kursus']->jumlah);
+    //     $data['detail_pembayaran']  = $detail_pembayaran;
+    //     $data['no_transaksi'] = 'DI' . '-' . self::numberToRomanRepresentation($data['cabang']->id_cabang) . '/' . $tanggal . '/' . Detail_Transaksi::generateID($time);
+    //     $tanggal = date('d');
+    //     $bulan = (int) date('m');
+    //     $tahun = date('Y');
+    //     $nama_bulan = [
+    //         1 => 'Januari',
+    //         'Februari',
+    //         'Maret',
+    //         'April',
+    //         'Mei',
+    //         'Juni',
+    //         'Juli',
+    //         'Agustus',
+    //         'September',
+    //         'Oktober',
+    //         'November',
+    //         'Desember'
+    //     ];
+    //     $data['tanggalTransaksi'] = "$tanggal $nama_bulan[$bulan] $tahun";
+    //     // dd($tanggalTransaksi);
+    //     // dd($no_transaksi);
+    //     return view('print.notapembayaran', $data);
+    // }
 
     public function printNota(Request $request)
     {
@@ -217,22 +326,18 @@ class AdministrasiController extends Controller
         $tang = explode('/', $tanggal);
         $time = strtotime($tang[2] . '-' . $tang[1] . '-' . $tang[0]);
         $data['jumlah_bayar'] = $request->j;
-        // dd(Crypt::decryptString($request->j));
         $data['cabang'] = Cabang::where('id_cabang', session('login-data')['cabang'])->first();
         $data['siswa'] = Siswa::where('id_siswa', $id_siswa)->first();
         $data['detail_kursus'] = Detail_Kursus::where('id_detail', $id_detail_kursus)->first();
-        $detail_pembayaran = Detail_Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('id_siswa', $id_siswa)->first();
+        $pembayaran = Pembayaran::where('id_detail_kursus', $id_detail_kursus)->orderBy('pembayaran_ke', 'ASC')->get();
         $data['telah_dibayar'] = 0;
-        if ($detail_pembayaran) {
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_1;
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_2 ?? 0;
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_3 ?? 0;
-            $data['telah_dibayar'] += $detail_pembayaran->pembayaran_4 ?? 0;
+        if (count($pembayaran) > 0) {
+            foreach ($pembayaran as $py) {
+                $data['telah_dibayar'] += $py->bayar;
+            }
         }
         $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'] - $data['jumlah_bayar'];
-        // dd($data['detail_kursus']->jumlah);
-        $data['detail_pembayaran']  = $detail_pembayaran;
-        $data['no_transaksi'] = 'DI' . '-' . self::numberToRomanRepresentation($data['cabang']->id_cabang) . '/' . $tanggal . '/' . Detail_Transaksi::generateID($time);
+        $data['no_transaksi'] = Pembayaran::where('id_detail_kursus', $id_detail_kursus)->latest()->first()->id_pembayaran;
         $tanggal = date('d');
         $bulan = (int) date('m');
         $tahun = date('Y');
@@ -251,9 +356,8 @@ class AdministrasiController extends Controller
             'Desember'
         ];
         $data['tanggalTransaksi'] = "$tanggal $nama_bulan[$bulan] $tahun";
-        // dd($tanggalTransaksi);
-        // dd($no_transaksi);
         return view('print.notapembayaran', $data);
+        // BELUM DICOBA
     }
 
     private static function numberToRomanRepresentation($number)
@@ -281,10 +385,12 @@ class AdministrasiController extends Controller
         ], [
             'required' => 'Mohon lengkapi semua form yang ada'
         ]);
+        $cabang = session('login-data')['cabang'];
         $newPengeluaran = new Pengeluaran;
         $newPengeluaran->id_pengeluaran = Str::random(32);
         $newPengeluaran->rincian = $request->rincian;
         $newPengeluaran->biaya = $request->biaya;
+        $newPengeluaran->cabang = $cabang;
         $tanggal = explode('/', $request->tanggal);
         $newPengeluaran->tanggal = $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
         $newPengeluaran->save();
@@ -296,6 +402,7 @@ class AdministrasiController extends Controller
         $newDetailTransaksi->keterangan = $request->rincian;
         $newDetailTransaksi->jenis_transaksi = 'Pengeluaran';
         $newDetailTransaksi->jumlah = $request->biaya;
+        $newDetailTransaksi->cabang = $cabang;
         $newDetailTransaksi->save();
         return Redirect::back()->with('success', 'Data Baru Pengeluaran Berhasil Ditambahkan');
     }
@@ -304,5 +411,10 @@ class AdministrasiController extends Controller
     {
         Pengeluaran::where('id_pengeluaran', $id_pengeluaran)->delete();
         return Redirect::back()->with('success', 'Data Berhasil Dihapus');
+    }
+
+    private static function generateIdPembayaran($cabang, $tanggal, $time){
+        $id_pembayaran = 'DI' . '-' . self::numberToRomanRepresentation($cabang) . '/' . $tanggal . '/' . Detail_Transaksi::generateID($time);
+        return $id_pembayaran;
     }
 }

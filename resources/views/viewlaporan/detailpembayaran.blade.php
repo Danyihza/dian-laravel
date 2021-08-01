@@ -137,6 +137,17 @@
                                         </tr>
                                         <tr>
                                             <td class="w-56">
+                                                Uang Peralatan
+                                            </td>
+                                            <td class="w-2">
+                                                :
+                                            </td>
+                                            <td class="font-medium uang">
+                                                {{$detail_kursus->uang_peralatan}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w-56">
                                                 Total Biaya Pendidikan
                                             </td>
                                             <td class="w-2">
@@ -154,11 +165,7 @@
                                                 :
                                             </td>
                                             <td class="font-medium uang">
-                                                @if($detail_pembayaran)
-                                                    {{ $telah_dibayar }}
-                                                @else
-                                                    {{ 0 }}
-                                                @endif
+                                                {{ $telah_dibayar }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -169,62 +176,27 @@
                                                 :
                                             </td>
                                             <td class="font-medium uang">
-                                                @if($detail_pembayaran)
-                                                    {{ $sisa_pembayaran }}
-                                                @else
-                                                    {{ 0 }}
-                                                @endif
+                                                {{ $sisa_pembayaran }}
                                             </td>
                                         </tr>
+                                        <form action="{{ route('editPembayaran') }}?s={{ $siswa->id_siswa }}&d={{ $detail_kursus->id_detail }}" method="post">
+                                        @csrf
+                                        @foreach($detail_pembayaran as $dp)
                                         <tr>
-                                            <form action="{{ route('editPembayaran') }}?s={{ $siswa->id_siswa }}&d={{ $detail_kursus->id_detail }}" method="post">
-                                                @csrf
                                             <td class="w-56">
-                                                Pembayaran 1
+                                                Pembayaran Ke-{{ $dp->pembayaran_ke }}
                                             </td>
                                             <td class="w-2">
                                                 :
                                             </td>
                                             <td class="font-medium">
-                                                <input class="w-full border" type="text" value="{{ $detail_pembayaran->pembayaran_1 ?? '' }}" {{ $detail_pembayaran->pembayaran_1 ? '' : 'disabled' }} name="pembayaran_1">
+                                                <input class="w-full border" type="text" value="{{ $dp->bayar }}" name="pembayaran[]">
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="w-56">
-                                                Pembayaran 2
-                                            </td>
-                                            <td class="w-2">
-                                                :
-                                            </td>
-                                            <td class="font-medium">
-                                                <input class="w-full border" type="text" value="{{ $detail_pembayaran->pembayaran_2 ?? '' }}" {{ $detail_pembayaran->pembayaran_2 ? '' : 'disabled' }} name="pembayaran_2">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="w-56">
-                                                Pembayaran 3
-                                            </td>
-                                            <td class="w-2">
-                                                :
-                                            </td>
-                                            <td class="font-medium">
-                                                <input class="w-full border" type="text" value="{{ $detail_pembayaran->pembayaran_3 ?? '' }}" {{ $detail_pembayaran->pembayaran_3 ? '' : 'disabled' }} name="pembayaran_3">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="w-56">
-                                                Pembayaran 4
-                                            </td>
-                                            <td class="w-2">
-                                                :
-                                            </td>
-                                            <td class="font-medium">
-                                                <input class="w-full border" type="text" value="{{ $detail_pembayaran->pembayaran_4 ?? '' }}" {{ $detail_pembayaran->pembayaran_4 ? '' : 'disabled' }} name="pembayaran_4">
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                     </table>
                                         <div class="text-right mt-5">
-                                            <button type="button" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cetak</button>
+                                            <button type="button" onclick="cetak()" class="button w-24 border dark:border-dark-5 text-gray-700 dark:text-gray-300 mr-1">Cetak</button>
                                             <button type="submit" class="button w-24 bg-theme-1 text-white">Simpan</button>
                                         </div>
                                     </form>
@@ -252,5 +224,8 @@
     });
 </script>
 <script>
+    function cetak(){
+        window.open(`{{ route('printArsipPembayaran') }}?s={{ $id_siswa }}&d={{ $id_detail_kursus }}`, '_blank', 'location=yes,height=768,width=1366,scrollbars=yes,status=yes');
+    }
 </script>
 @endsection

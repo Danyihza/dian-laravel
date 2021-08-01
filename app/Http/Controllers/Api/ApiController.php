@@ -12,11 +12,11 @@ class ApiController extends Controller
     {
         $request->validate([
             'cabang' => 'required',
-            'program' => 'required'
+            'kursus' => 'required'
         ]);
         $cabang = $request->cabang;
-        $program = $request->program;
-        $nis = Siswa::generateNis($cabang, $program);
+        $kursus = $request->kursus;
+        $nis = Siswa::generateNis($cabang, $kursus);
         return response()->json([
             'status' => 'success',
             'data' => $nis

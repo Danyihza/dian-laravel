@@ -44,7 +44,7 @@
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        {{$loop->iteration}}
+                                        {{$krs->id_kursus}}
                                     </span>
                                 </td>
                                 <td class="text-center">

@@ -23,16 +23,18 @@
 				<th class='text-center'>KETERANGAN</th>
 				<th class='text-center'>PEMASUKAN</th>
 				<th class='text-center'>PENGELUARAN</th>
+				<th class='text-center'>SALDO</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($laporanharian as $lh)
+			@foreach($laporanharian as $key => $lh)
 			<tr>
 				<td align="center">{{ $loop->iteration }}</td>
 				<td align="center">{{ date('d/m/Y', strtotime($lh->tanggal)) }}</td>
 				<td align="center">{{$lh->keterangan}}</td>
-				<td align="center">{{$lh->jenis_transaksi == 'Pemasukan' ? $lh->jumlah : ''}}</td>
-				<td align="center">{{$lh->jenis_transaksi == 'Pengeluaran' ? $lh->jumlah : ''}}</td>
+				<td align="center"><span class="uang">{{$lh->jenis_transaksi == 'Pemasukan' ? $lh->jumlah : ''}}</span></td>
+				<td align="center"><span class="uang">{{$lh->jenis_transaksi == 'Pengeluaran' ? $lh->jumlah : ''}}</span></td>
+				<td align="center"><span class="uang">{{$saldos[$key]}}</span></td>
 			</tr>
 			@endforeach
 		</tbody>
@@ -40,3 +42,13 @@
  
 </body>
 </html>
+<script src="{{ asset('assets/js/autonumeric@4.1.0.js') }}"></script>
+<script>
+    new AutoNumeric.multiple('.uang',{
+        allowDecimalPadding: false,
+        decimalCharacter: ",",
+        digitGroupSeparator: '.',
+        minimumValue: "0",
+        currencySymbol: "Rp ",
+    });
+</script>

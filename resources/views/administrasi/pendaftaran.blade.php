@@ -70,6 +70,7 @@
                                         <div class="mt-2"> 
                                             <select name="pendidikan" class="tail-select w-full" required>
                                                 <option value="" selected>Pilih Pendidikan</option>
+                                                <option value="TK">TK</option>
                                                 <option value="SD">SD</option>
                                                 <option value="SMP">SMP</option>
                                                 <option value="SMA">SMA</option>
@@ -93,7 +94,7 @@
                                     <div> 
                                         <label>Kursus</label>
                                         <div class="mt-2"> 
-                                            <select name="kursus" id="kursus" data-search="true" class="tail-select w-full" required>
+                                            <select name="kursus" id="kursus" data-search="true" onchange="getNis()" class="tail-select w-full" required>
                                                 <option value="" selected>Pilih Kursus</option>
                                                 @foreach($kursus as $krs)
                                                     <option value="{{$krs->id_kursus}}">{{$krs->nama_kursus}}</option>
@@ -104,7 +105,7 @@
                                     <div class="mt-3"> 
                                         <label>Program</label>
                                         <div class="mt-2"> 
-                                            <select name="program" id="program" data-search="true" onchange="getNis()" class="tail-select w-full" required>
+                                            <select name="program" id="program" data-search="true" class="tail-select w-full" required>
                                                 <option value="" selected>Pilih Program</option>
                                                 @foreach ($program as $prg)
                                                     <option value="{{ $prg->id_program }}">{{ $prg->nama_program }}</option>
@@ -200,6 +201,10 @@
                                         </div>
                                     </div>
                                     <div class="mt-3">
+                                        <label>Uang Peralatan</label>
+                                        <input type="text" class="input w-full border mt-2 harga" id="uang_peralatan" name="uang_peralatan" oninput="hitungJumlah()" placeholder="Masukkan uang peralatan" required>
+                                    </div>
+                                    <div class="mt-3">
                                         <label>Jumlah</label>
                                         <input type="text" id="jumlah" class="input w-full border mt-2" name="jumlah" placeholder="Jumlah akan ditampilkan jika seluruh biaya sudah terinput" readonly required>
                                     </div>
@@ -221,12 +226,11 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('assets/js/autonumeric@4.1.0.js') }}"></script>
 <script>
-    new AutoNumeric.multiple('.harga',{
+    new AutoNumeric('.harga',{
         allowDecimalPadding: false,
-        decimalCharacter: "",
         minimumValue: "0",
+        digitGroupSeparator: "",
         unformatOnSubmit: true
     });
 </script>
@@ -236,15 +240,16 @@
         const uang_kursus =  parseInt(document.getElementById('uang_kursus').value) || 0;
         const uang_ujian =  parseInt(document.getElementById('uang_ujian').value) || 0;
         const uang_buku =  parseInt(document.getElementById('uang_buku').value) || 0;
+        const uang_peralatan = parseInt(document.getElementById('uang_peralatan').value) || 0;
         const jumlah =  document.getElementById('jumlah');
 
-        const jumlah_biaya = uang_pendaftaran + uang_kursus + uang_ujian + uang_buku;
+        const jumlah_biaya = uang_pendaftaran + uang_kursus + uang_ujian + uang_buku + uang_peralatan;
         jumlah.value = jumlah_biaya;
     }
 
     async function getNis(){
         const cabang = {{ session('login-data')['cabang'] }};
-        const program = document.getElementById('program').value;
+        const kursus = document.getElementById('kursus').value;
         const inputnis = document.getElementById('nis');
         const no_urut = document.getElementById('no_urut');
         const nis = await fetch("{{ route('api.getnis') }}", {
@@ -255,7 +260,7 @@
             },
             body: JSON.stringify({
                 cabang: cabang,
-                program: program
+                kursus: kursus
             })
         })
         .then(res => res.json())

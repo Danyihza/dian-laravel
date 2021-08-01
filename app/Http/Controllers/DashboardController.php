@@ -17,7 +17,7 @@ class DashboardController extends Controller
         // $nis = Siswa::generateNis(1,4);
         // dd($nis);
         $data['title'] = 'dashboard';
-        $data['siswa'] = Fk_detail_siswa::count();
+        $data['siswa'] = Fk_detail_siswa::where('id_cabang', session('login-data')['cabang'])->count();
         $data['program'] = Program::count();
         $data['cabang'] = Cabang::count();
         $data['admin'] = Admin::count();

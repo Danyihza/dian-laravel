@@ -7,11 +7,13 @@ use App\Models\Cabang;
 use App\Models\Jabatan;
 use App\Models\Karyawan;
 use App\Models\Kursus;
+use App\Models\Level;
 use App\Models\Program;
 use App\Models\Uang;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\File;
 
 class MasterSistemController extends Controller
 {
@@ -67,6 +69,14 @@ class MasterSistemController extends Controller
         $data['buku'] = Uang::where('jenis_uang', 'buku')->orderBy('jumlah', 'ASC')->get();
         // dd($data);
         return view('mastersistem.biaya', $data);
+    }
+
+    public function levelView()
+    {
+        $data['title'] = 'Level';
+        $data['parent'] = 'Master Sistem';
+        $data['level'] = Level::all();
+        return view('mastersistem.level', $data);
     }
 
     public function addKaryawan(Request $request)
@@ -220,6 +230,29 @@ class MasterSistemController extends Controller
         $biaya = Uang::where('id_uang', $id_biaya)->first();
         $biaya->delete();
         return Redirect::back()->with('success', 'Biaya sukses dihapus dari daftar');
+    }
+
+    public function addLevel(Request $request)
+    {
+        $newLevel = new Level;
+        $newLevel->nama_level = $request->nama_level;
+        $newLevel->save();
+        return Redirect::back()->with('success', 'Data Level Baru Berhasil Ditambahkan');
+    }
+
+    public function removeLevel($id_level)
+    {
+        $level = Level::where('id_level', $id_level)->first();
+        $level->delete();
+        return Redirect::back()->with('success', 'Data Level Berhasil Dihapus');
+    }
+
+    public function changeLogo(Request $request)
+    {
+        File::delete('assets/images/dian-logo.png');
+        $newLogo = $request->file('gambar');
+        $newLogo->move('assets/images/', 'dian-logo.png');
+        return Redirect::back()->with('success', 'Logo Sukses Diubah');
     }
 
 }

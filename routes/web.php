@@ -66,6 +66,8 @@ Route::group(['middleware' => 'authmiddleware'], function () {
     Route::get('/mastersistem/jabatan/delete/{id_jabatan}', [MasterSistemController::class, 'removeJabatan'])->name('removeJabatan');
     Route::get('/mastersistem/biaya', [MasterSistemController::class, 'biayaView'])->name('biayaView');
     Route::get('/mastersistem/biaya/delete/{id_biaya?}', [MasterSistemController::class, 'removeBiaya'])->name('removeBiaya');
+    Route::get('/mastersistem/level', [MasterSistemController::class, 'levelView'])->name('levelView');
+    Route::get('/mastersistem/level/delete/{id_level?}', [MasterSistemController::class, 'removeLevel'])->name('removeLevel');
     Route::get('/administrator', [AdministratorController::class, 'listAdminView'])->name('listAdminView');
     Route::post('/administrator/add', [AdministratorController::class, 'addAdmin'])->name('addAdmin');
     Route::get('/administrator/remove/{id_admin?}', [AdministratorController::class, 'removeAdmin'])->name('removeAdmin');
@@ -79,6 +81,8 @@ Route::group(['middleware' => 'authmiddleware'], function () {
     Route::post('/mastersistem/kursus/add', [MasterSistemController::class, 'addKursus'])->name('addKursus');
     Route::post('/mastersistem/program/add', [MasterSistemController::class, 'addProgram'])->name('addProgram');
     Route::post('/mastersistem/biaya/add/{jenis_biaya}', [MasterSistemController::class, 'addBiaya'])->name('addBiaya');
+    Route::post('/mastersistem/level/add', [MasterSistemController::class, 'addLevel'])->name('addLevel');
+    Route::post('/mastersistem/changelogo', [MasterSistemController::class, 'changeLogo'])->name('changeLogo');
 
     Route::get('/printnota', [AdministrasiController::class, 'printNota'])->name('prinNotaPembayaran');
 });

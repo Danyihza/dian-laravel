@@ -49,7 +49,7 @@
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        {{ $loop->iteration }}
+                                        {{ $cbg->id_cabang }}
                                     </span>
                                 </td>
                                 <td class="text-center">

@@ -30,6 +30,11 @@
                     <div class="text-xs text-theme-41 dark:text-gray-600">{{ session('login-data')['level'] }} Admin</div>
                 </div>
                 <div class="p-2 border-t border-theme-40 dark:border-dark-3">
+                    @if(session('login-data')['level'] == 'Super')
+                    <a href="#" data-toggle="modal" data-target="#header-footer-modal-preview"
+                        class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md">
+                        <i data-feather="settings" class="w-4 h-4 mr-2"></i> Ganti Logo </a>
+                    @endif
                     <a href="{{ route('signout') }}"
                         class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-theme-1 dark:hover:bg-dark-3 rounded-md">
                         <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout </a>

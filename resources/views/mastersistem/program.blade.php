@@ -44,7 +44,7 @@
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        {{$loop->iteration}}
+                                        {{$prg->id_program}}
                                     </span>
                                 </td>
                                 <td class="text-center">

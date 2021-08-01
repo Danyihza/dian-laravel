@@ -18,14 +18,14 @@
                     <div class="intro-y col-span-12 lg:col-span-6">
                         <!-- BEGIN: Form Layout -->
                         <div class="intro-y box p-5 mb-5">
-                            <form action="{{ route('addJabatan') }}" method="post">
+                            <form action="{{ route('addLevel') }}" method="post">
                                 @csrf
                                 <div>
-                                    <label>Jenis Jabatan</label>
-                                    <input type="text" class="input w-full border mt-2" name="jenis_jabatan" placeholder="Masukkan Jenis Jabatan">
+                                    <label>Nama Level</label>
+                                    <input type="text" class="input w-full border mt-2" name="nama_level" placeholder="Masukkan Nama Level">
                                 </div>
                                 <div class="text-right mt-5">
-                                    <button type="submit" class="button w-36 bg-theme-1 text-white">Tambah Jabatan</button>
+                                    <button type="submit" class="button w-36 bg-theme-1 text-white">Tambah Level</button>
                                 </div>
                             </form>
                         </div>
@@ -35,26 +35,26 @@
                         <thead>
                             <tr>
                                 <th class="text-center whitespace-no-wrap">NO</th>
-                                <th class="text-center whitespace-no-wrap">JENIS JABATAN</th>
+                                <th class="text-center whitespace-no-wrap">NAMA LEVEL</th>
                                 <th class="text-center whitespace-no-wrap">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($jabatan as $jbt)
+                            @foreach ($level as $lvl)
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        {{$jbt->id_jabatan}}
+                                        {{$lvl->id_level}}
                                     </span>
                                 </td>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        {{$jbt->jenis_jabatan}}
+                                        {{$lvl->nama_level}}
                                     </span>
                                 </td>
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <a class="flex items-center text-theme-6" href="{{ route('removeJabatan', $jbt->id_jabatan) }}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                        <a class="flex items-center text-theme-6" href="{{ route('removeLevel', $lvl->id_level) }}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                                     </div>
                                 </td>
                             </tr>

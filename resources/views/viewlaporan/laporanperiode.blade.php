@@ -18,6 +18,18 @@
                     <div class="p-48 text-center">
                         <form action="{{route('laporanPeriodeDetail')}}" method="get">
                             <label class="font-medium text-xl">Laporan Per Periode</label>
+                            @if(session('login-data')['level'] == 'Super')
+                                <div class="mt-3"> 
+                                    <div class="mt-2"> 
+                                        <select name="cabang" class="tail-select" required>
+                                            <option value="" selected>Pilih Cabang</option>
+                                            @foreach($cabang as $cb)
+                                                <option value="{{ $cb->id_cabang }}" {{ $cb->id_cabang == session('login-data')['cabang'] ? 'selected' : ''}}>{{ $cb->alamat }} - {{ $cb->kota }}</option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                </div>
+                            @endif
                             <div class="">
                                 <div class="relative w-56 mx-auto my-3">
                                     <div class="absolute rounded-l w-10 h-full flex items-center justify-center bg-gray-100 border text-gray-600 dark:bg-dark-1 dark:border-dark-4"> 

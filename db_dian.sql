@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2021 at 09:02 PM
+-- Generation Time: Aug 01, 2021 at 07:33 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -43,7 +43,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama`, `username`, `password`, `cabang`, `level`, `created_at`, `updated_at`) VALUES
-('wDDzPhJYkzO8kjts5AFHKrmuUa9vOWds', 'Super Administrator', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1, 'Super', '2021-07-22 18:21:40', '2021-07-22 18:21:40');
+('VY9OgkTG7XkKJ3uwkIbSkQZNHuQOvXOe', 'Dany Ahmad Ihza P', 'danyihza', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 1, 'Normal', '2021-07-30 14:07:28', '2021-07-30 14:07:28'),
+('wDDzPhJYkzO8kjts5AFHKrmuUa9vOWds', 'Super Administrator', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 2, 'Super', '2021-07-22 18:21:40', '2021-07-22 18:21:40');
 
 -- --------------------------------------------------------
 
@@ -64,11 +65,11 @@ CREATE TABLE `cabang` (
 --
 
 INSERT INTO `cabang` (`id_cabang`, `kota`, `alamat`, `created_at`, `updated_at`) VALUES
-(2, 'Surabaya', 'Jl. Tembok Dukuh 60i', '2021-07-22 18:35:48', '2021-07-22 18:35:48'),
-(3, 'Surabaya', 'Jl. Simo Kwagen 29', '2021-07-22 18:35:59', '2021-07-22 18:35:59'),
-(4, 'Surabaya', 'Jl. Raya Manukan Kulon 36', '2021-07-22 18:36:13', '2021-07-22 18:36:13'),
-(5, 'Surabaya', 'Jl. Manukan Dalam Blok 14j 8', '2021-07-22 18:36:23', '2021-07-22 18:36:23'),
-(7, 'Kediri', 'Jl. Raya Matahari No. 30 Pare, (Kampung English)', '2021-07-22 18:36:55', '2021-07-22 18:36:55');
+(1, 'Surabaya', 'Jl. Tembok Dukuh 60i', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(2, 'Surabaya', 'Jl. Simo Kwagen 29', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(3, 'Surabaya', 'Jl. Raya Manukan Kulon 36', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(4, 'Surabaya', 'Jl. Manukan Dalam Blok 14j 8', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(5, 'Kediri', 'Jl. Raya Matahari No. 30 Pare, (Kampung English)', '2021-07-26 03:05:59', '2021-07-26 03:05:59');
 
 -- --------------------------------------------------------
 
@@ -89,11 +90,20 @@ CREATE TABLE `detail_kursus` (
   `uang_kursus` int(11) DEFAULT NULL,
   `uang_ujian_sertifikat` int(11) DEFAULT NULL,
   `uang_buku` int(11) DEFAULT NULL,
+  `uang_peralatan` int(11) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `tanggal_daftar` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_kursus`
+--
+
+INSERT INTO `detail_kursus` (`id_detail`, `kursus`, `program`, `level`, `catatan_kursus`, `hari_kursus`, `jam_kursus`, `no_urut`, `uang_pendaftaran`, `uang_kursus`, `uang_ujian_sertifikat`, `uang_buku`, `uang_peralatan`, `jumlah`, `tanggal_daftar`, `created_at`, `updated_at`) VALUES
+('fa84gEBs1QoR5nlRzzK86EAwvM7n722x', 2, 2, 1, NULL, 'Senin,Selasa,Rabu,Jumat,Sabtu', '12:00', 1, 75000, 250000, 75000, 80000, 400000, 880000, '2021-07-31 17:00:00', '2021-08-01 10:03:29', '2021-08-01 15:14:24'),
+('tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', 3, 1, 3, NULL, 'Senin,Rabu,Jumat', '12:00', 2, 75000, 6000000, 75000, 80000, 90000, 6320000, '2021-08-01 17:00:00', '2021-08-01 13:32:18', '2021-08-01 15:14:51');
 
 -- --------------------------------------------------------
 
@@ -114,6 +124,13 @@ CREATE TABLE `detail_pembayaran` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `detail_pembayaran`
+--
+
+INSERT INTO `detail_pembayaran` (`id_detail_pembayaran`, `id_siswa`, `id_detail_kursus`, `pembayaran_1`, `pembayaran_2`, `pembayaran_3`, `pembayaran_4`, `tanggal`, `created_at`, `updated_at`) VALUES
+(9, 'sppxhokrUJFlDoaiFUefkjqwkvjIqEsj', 'JCaXVLEAko2mMVbJEIHDDCDpZZ1i08ef', 1000000, 130000, NULL, NULL, NULL, '2021-07-26 02:06:09', '2021-07-26 02:06:31');
+
 -- --------------------------------------------------------
 
 --
@@ -126,9 +143,20 @@ CREATE TABLE `detail_transaksi` (
   `keterangan` varchar(128) NOT NULL,
   `jenis_transaksi` varchar(32) NOT NULL,
   `jumlah` int(11) NOT NULL,
+  `cabang` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`id_detail_transaksi`, `tanggal`, `keterangan`, `jenis_transaksi`, `jumlah`, `cabang`, `created_at`, `updated_at`) VALUES
+('DI-II/01/08/2021/01', '2021-07-31 17:00:00', 'pertama', 'Pemasukan', 1000000, 2, '2021-08-01 13:39:56', '2021-08-01 13:47:00'),
+('DI-II/01/08/2021/02', '2021-07-31 17:00:00', '2', 'Pemasukan', 5000000, 2, '2021-08-01 13:42:41', '2021-08-01 13:42:41'),
+('DI-II/02/08/2021/01', '2021-08-01 17:00:00', 'ke 3', 'Pemasukan', 120000, 2, '2021-08-01 17:11:20', '2021-08-01 17:11:20'),
+('pgSjDPxueWKRksocqNnZX8q62UAgxTku', '2021-07-31 17:00:00', 'tes1', 'Pengeluaran', 20000, 2, '2021-08-01 15:49:43', '2021-08-01 15:49:43');
 
 -- --------------------------------------------------------
 
@@ -139,9 +167,18 @@ CREATE TABLE `detail_transaksi` (
 CREATE TABLE `fk_detail_siswa` (
   `id_siswa` varchar(32) NOT NULL,
   `id_detail_kursus` varchar(32) NOT NULL,
+  `id_cabang` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fk_detail_siswa`
+--
+
+INSERT INTO `fk_detail_siswa` (`id_siswa`, `id_detail_kursus`, `id_cabang`, `created_at`, `updated_at`) VALUES
+('xiHanhXeuFmjU7cusKChpQQIgCykpXK6', 'fa84gEBs1QoR5nlRzzK86EAwvM7n722x', 2, '2021-08-01 10:03:29', '2021-08-01 10:03:29'),
+('Eq4MAhMVtX4aeh0K0cO4R6RRUNPW7MKG', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', 2, '2021-08-01 13:32:18', '2021-08-01 13:32:18');
 
 -- --------------------------------------------------------
 
@@ -190,14 +227,14 @@ CREATE TABLE `kursus` (
 --
 
 INSERT INTO `kursus` (`id_kursus`, `nama_kursus`, `created_at`, `updated_at`) VALUES
-(3, 'Mengetik', '2021-07-22 18:37:16', '2021-07-22 18:37:16'),
-(4, 'Akuntansi', '2021-07-22 18:37:21', '2021-07-22 18:37:21'),
-(5, 'Bahasa Inggris', '2021-07-22 18:37:28', '2021-07-22 18:37:28'),
-(6, 'Komputer', '2021-07-22 18:37:32', '2021-07-22 18:37:32'),
-(7, 'Bimbel', '2021-07-22 18:37:37', '2021-07-22 18:37:37'),
-(8, 'Diploma', '2021-07-22 18:37:41', '2021-07-22 18:37:41'),
-(9, 'Teknisi', '2021-07-22 18:37:46', '2021-07-22 18:37:46'),
-(10, 'In House Training', '2021-07-22 18:37:53', '2021-07-22 18:37:53');
+(1, 'Mengetik', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(2, 'Akuntansi', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(3, 'Bahasa Inggris', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(4, 'Komputer', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(5, 'Bimbel', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(6, 'Diploma', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(7, 'Teknisi', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(8, 'In House Training', '2021-07-26 03:05:59', '2021-07-26 03:05:59');
 
 -- --------------------------------------------------------
 
@@ -217,9 +254,10 @@ CREATE TABLE `level` (
 --
 
 INSERT INTO `level` (`id_level`, `nama_level`, `created_at`, `updated_at`) VALUES
-(1, 'Basic', '2021-07-21 13:52:44', '2021-07-21 13:52:44'),
-(2, 'Intermediate', '2021-07-21 13:52:44', '2021-07-21 13:52:44'),
-(3, 'Expert', '2021-07-21 13:52:44', '2021-07-21 13:52:44');
+(1, '-', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(2, 'Basic', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(3, 'Intermediate', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(4, 'Expert', '2021-07-26 03:05:59', '2021-07-26 03:05:59');
 
 -- --------------------------------------------------------
 
@@ -229,8 +267,7 @@ INSERT INTO `level` (`id_level`, `nama_level`, `created_at`, `updated_at`) VALUE
 
 CREATE TABLE `pembayaran` (
   `id_pembayaran` varchar(128) NOT NULL,
-  `siswa` int(11) NOT NULL,
-  `total_biaya` int(11) NOT NULL,
+  `id_detail_kursus` varchar(32) NOT NULL,
   `tanggal_pembayaran` timestamp NULL DEFAULT NULL,
   `bayar` int(11) NOT NULL,
   `keterangan` varchar(128) NOT NULL,
@@ -238,6 +275,15 @@ CREATE TABLE `pembayaran` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id_pembayaran`, `id_detail_kursus`, `tanggal_pembayaran`, `bayar`, `keterangan`, `pembayaran_ke`, `created_at`, `updated_at`) VALUES
+('DI-II/01/08/2021/01', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', '2021-07-31 17:00:00', 1000000, 'pertama', 1, '2021-08-01 13:39:56', '2021-08-01 13:47:00'),
+('DI-II/01/08/2021/02', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', '2021-07-31 17:00:00', 5000000, '2', 2, '2021-08-01 13:42:41', '2021-08-01 13:42:41'),
+('DI-II/02/08/2021/01', 'tt0M8QK9NEr7BWBuAcAHGCN40wBfAXBu', '2021-08-01 17:00:00', 120000, 'ke 3', 3, '2021-08-01 17:11:20', '2021-08-01 17:11:20');
 
 -- --------------------------------------------------------
 
@@ -249,10 +295,18 @@ CREATE TABLE `pengeluaran` (
   `id_pengeluaran` varchar(128) NOT NULL,
   `rincian` varchar(128) NOT NULL,
   `biaya` int(11) NOT NULL,
+  `cabang` int(11) DEFAULT NULL,
   `tanggal` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengeluaran`
+--
+
+INSERT INTO `pengeluaran` (`id_pengeluaran`, `rincian`, `biaya`, `cabang`, `tanggal`, `created_at`, `updated_at`) VALUES
+('q9wAozlESlxBm35ft3WgXVbLapAjs0Bb', 'tes1', 20000, 2, '2021-07-31 17:00:00', '2021-08-01 15:49:43', '2021-08-01 15:49:43');
 
 -- --------------------------------------------------------
 
@@ -272,12 +326,12 @@ CREATE TABLE `program` (
 --
 
 INSERT INTO `program` (`id_program`, `nama_program`, `created_at`, `updated_at`) VALUES
-(2, 'Diploma Program', '2021-07-22 18:38:04', '2021-07-22 18:38:04'),
-(3, 'English Program', '2021-07-22 18:38:10', '2021-07-22 18:38:10'),
-(4, 'Computer Program', '2021-07-22 18:38:19', '2021-07-22 18:38:19'),
-(5, 'Business Program', '2021-07-22 18:38:25', '2021-07-22 18:38:25'),
-(6, 'Accounting Program', '2021-07-22 18:38:31', '2021-07-22 18:38:31'),
-(7, 'Bimbingan Belajar', '2021-07-22 18:38:37', '2021-07-22 18:38:37');
+(1, 'Diploma Program', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(2, 'English Program', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(3, 'Computer Program', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(4, 'Business Program', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(5, 'Accounting Program', '2021-07-26 03:05:59', '2021-07-26 03:05:59'),
+(6, 'Bimbingan Belajar', '2021-07-26 03:05:59', '2021-07-26 03:05:59');
 
 -- --------------------------------------------------------
 
@@ -831,6 +885,14 @@ CREATE TABLE `student` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`id_siswa`, `nis`, `nama`, `kota_lahir`, `tanggal_lahir`, `alamat`, `kota_tinggal`, `no_telpon`, `pendidikan`, `created_at`, `updated_at`) VALUES
+('Eq4MAhMVtX4aeh0K0cO4R6RRUNPW7MKG', '2102030802', 'Arini Firdausiyah', '1101', '2021-07-31 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '1106', '082331147549', 'S1', '2021-08-01 13:32:18', '2021-08-01 15:14:51'),
+('xiHanhXeuFmjU7cusKChpQQIgCykpXK6', '2102020801', 'Dany Ahmad Ihza Prakoso', '1101', '2007-08-30 17:00:00', 'Rumah Bapak Sulhan dusun sukunan rt01 rw03 Desa Rondokuning Kraksaan', '1106', '082331147549', 'S3', '2021-08-01 10:03:29', '2021-08-01 15:14:24');
+
 -- --------------------------------------------------------
 
 --
@@ -910,7 +972,8 @@ ALTER TABLE `detail_transaksi`
 --
 ALTER TABLE `fk_detail_siswa`
   ADD KEY `hasSiswa` (`id_siswa`),
-  ADD KEY `id_detail_kursus` (`id_detail_kursus`);
+  ADD KEY `id_detail_kursus` (`id_detail_kursus`),
+  ADD KEY `hasCabang` (`id_cabang`);
 
 --
 -- Indexes for table `jabatan`
@@ -940,8 +1003,7 @@ ALTER TABLE `level`
 -- Indexes for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  ADD PRIMARY KEY (`id_pembayaran`),
-  ADD KEY `has_siswa` (`siswa`);
+  ADD PRIMARY KEY (`id_pembayaran`);
 
 --
 -- Indexes for table `pengeluaran`
@@ -981,31 +1043,31 @@ ALTER TABLE `uang`
 -- AUTO_INCREMENT for table `cabang`
 --
 ALTER TABLE `cabang`
-  MODIFY `id_cabang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_cabang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `detail_pembayaran`
 --
 ALTER TABLE `detail_pembayaran`
-  MODIFY `id_detail_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_detail_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `kursus`
 --
 ALTER TABLE `kursus`
-  MODIFY `id_kursus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_kursus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `level`
 --
 ALTER TABLE `level`
-  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_level` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `id_program` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_program` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -1015,14 +1077,9 @@ ALTER TABLE `program`
 -- Constraints for table `fk_detail_siswa`
 --
 ALTER TABLE `fk_detail_siswa`
+  ADD CONSTRAINT `hasCabang` FOREIGN KEY (`id_cabang`) REFERENCES `cabang` (`id_cabang`),
   ADD CONSTRAINT `hasDetailKursus` FOREIGN KEY (`id_detail_kursus`) REFERENCES `detail_kursus` (`id_detail`) ON DELETE CASCADE,
   ADD CONSTRAINT `hasSiswa` FOREIGN KEY (`id_siswa`) REFERENCES `student` (`id_siswa`) ON DELETE CASCADE;
-
---
--- Constraints for table `pembayaran`
---
-ALTER TABLE `pembayaran`
-  ADD CONSTRAINT `has_siswa` FOREIGN KEY (`siswa`) REFERENCES `siswa` (`nis`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

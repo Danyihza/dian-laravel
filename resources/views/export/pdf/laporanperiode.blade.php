@@ -23,16 +23,18 @@
 				<th class='text-center'>KETERANGAN</th>
 				<th class='text-center'>PEMASUKAN</th>
 				<th class='text-center'>PENGELUARAN</th>
+				<th class='text-center'>SALDO</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($laporanperiode as $lp)
+			@foreach($laporanperiode as $key => $lp)
 			<tr>
 				<td align="center">{{ $loop->iteration }}</td>
 				<td align="center">{{ date('d/m/Y', strtotime($lp->tanggal)) }}</td>
 				<td align="center">{{$lp->keterangan}}</td>
 				<td align="center">{{$lp->jenis_transaksi == 'Pemasukan' ? $lp->jumlah : ''}}</td>
 				<td align="center">{{$lp->jenis_transaksi == 'Pengeluaran' ? $lp->jumlah : ''}}</td>
+				<td align="center">{{$saldos[$key]}}</td>
 			</tr>
 			@endforeach
 		</tbody>

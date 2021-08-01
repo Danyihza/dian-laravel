@@ -23,6 +23,7 @@ class Detail_Kursus extends Model
         'uang_kursus',
         'uang_ujian_sertifikat',
         'uang_buku',
+        'uang_peralatan',
         'jumlah',
         'tanggal_daftar'
     ];
@@ -40,6 +41,11 @@ class Detail_Kursus extends Model
     public function hasProgram()
     {
         return $this->hasOne(Program::class, 'id_program', 'program');
+    }
+
+    public function belongsPembayaran()
+    {
+        return $this->belongsTo(Pembayaran::class, 'id_pembayaran');
     }
 }
 

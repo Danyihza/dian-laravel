@@ -18,7 +18,12 @@
                     <div class="flex justify-end my-5 sm:mt-0">
                         <a href="{{ route('pendaftaranView') }}?redirect_to={{ urlencode(route('arsipSiswaView')) }}"
                             class="button w-1/2 sm:w-auto flex items-center border text-gray-700 mr-2 dark:bg-dark-5 dark:text-gray-300"
-                            id="tabulator-print"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mx-auto"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Tambah 
+                            id="tabulator-print"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mx-auto">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg> Tambah
                         </a>
                         <div class="dropdown w-1/2 sm:w-auto" style="position: relative;">
                             <button
@@ -82,16 +87,21 @@
                                     <span class="font-medium">{{ $s->hasSiswa->nama }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="font-medium">{{ $s->hasDetailKursus->kursus != 0 ? $s->hasDetailKursus->hasKursus->nama_kursus : '-' }}</span>
+                                    <span
+                                        class="font-medium">{{ $s->hasDetailKursus->kursus != 0 ? $s->hasDetailKursus->hasKursus->nama_kursus : '-' }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="font-medium">{{ $s->hasDetailKursus->program != 0 ? $s->hasDetailKursus->hasProgram->nama_program : '-' }}</span>
+                                    <span
+                                        class="font-medium">{{ $s->hasDetailKursus->program != 0 ? $s->hasDetailKursus->hasProgram->nama_program : '-' }}</span>
                                 </td>
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <a class="flex items-center mr-3" href="{{ route('detailSiswa') }}?s={{ $s->hasSiswa->id_siswa }}&d={{ $s->hasDetailKursus->id_detail }}"> <i
-                                                data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
-                                        <a class="flex items-center text-theme-6" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" href="{{ route('removeSiswa') }}?s={{ $s->hasSiswa->id_siswa }}&d={{ $s->hasDetailKursus->id_detail }}"
+                                        <a class="flex items-center mr-3"
+                                            href="{{ route('detailSiswa') }}?s={{ $s->hasSiswa->id_siswa }}&d={{ $s->hasDetailKursus->id_detail }}">
+                                            <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit </a>
+                                        <a class="flex items-center text-theme-6"
+                                            onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')"
+                                            href="{{ route('removeSiswa') }}?s={{ $s->hasSiswa->id_siswa }}&d={{ $s->hasDetailKursus->id_detail }}"
                                             data-toggle="modal" data-target="#delete-confirmation-modal"> <i
                                                 data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
                                     </div>
@@ -110,11 +120,31 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('assets/js/datatables.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.colVis.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#pembayaran').DataTable();
+        $('#pembayaran').DataTable({
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'excel',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }, {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }]
+        });
     })
 
 </script>
