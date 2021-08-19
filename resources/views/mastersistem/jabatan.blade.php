@@ -44,7 +44,7 @@
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        {{$jbt->id_jabatan}}
+                                        {{$loop->iteration}}
                                     </span>
                                 </td>
                                 <td class="text-center">

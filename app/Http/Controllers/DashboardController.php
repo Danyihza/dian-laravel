@@ -21,6 +21,7 @@ class DashboardController extends Controller
         $data['program'] = Program::count();
         $data['cabang'] = Cabang::count();
         $data['admin'] = Admin::count();
+        $data['cabangs'] = Admin::where('id_admin', session('login-data')['id'])->first()->hasCabang;
         return view('dashboard', $data);
     }
 }

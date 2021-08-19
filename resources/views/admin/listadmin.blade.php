@@ -73,6 +73,7 @@
                                 <th class="text-center whitespace-no-wrap">NAMA</th>
                                 <th class="text-center whitespace-no-wrap">USERNAME</th>
                                 <th class="text-center whitespace-no-wrap">LEVEL</th>
+                                <th class="text-center whitespace-no-wrap">CABANG</th>
                                 @if(session('login-data')['level'] == 'Super')
                                     <th class="text-center whitespace-no-wrap">AKSI</th>
                                 @endif
@@ -99,6 +100,11 @@
                                 <td class="text-center">
                                     <span class="font-medium">
                                         {{$adm->level . ' Admin'}}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="font-medium">
+                                        {{ $adm->hasCabang->alamat . ' - ' . $adm->hasCabang->kota }}
                                     </span>
                                 </td>
                                 @if(session('login-data')['level'] == 'Super')

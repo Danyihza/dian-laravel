@@ -79,7 +79,9 @@ Route::group(['middleware' => 'authmiddleware'], function () {
     Route::post('/mastersistem/cabang/add', [MasterSistemController::class, 'addCabang'])->name('addCabang');
     Route::post('/mastersistem/jabatan/add', [MasterSistemController::class, 'addJabatan'])->name('addJabatan');
     Route::post('/mastersistem/kursus/add', [MasterSistemController::class, 'addKursus'])->name('addKursus');
+    Route::post('/mastersistem/kursus/edit', [MasterSistemController::class, 'editKursus'])->name('editKursus');
     Route::post('/mastersistem/program/add', [MasterSistemController::class, 'addProgram'])->name('addProgram');
+    Route::post('/mastersistem/program/edit', [MasterSistemController::class, 'editProgram'])->name('editProgram');
     Route::post('/mastersistem/biaya/add/{jenis_biaya}', [MasterSistemController::class, 'addBiaya'])->name('addBiaya');
     Route::post('/mastersistem/level/add', [MasterSistemController::class, 'addLevel'])->name('addLevel');
     Route::post('/mastersistem/changelogo', [MasterSistemController::class, 'changeLogo'])->name('changeLogo');

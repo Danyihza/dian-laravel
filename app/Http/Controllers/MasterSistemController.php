@@ -50,7 +50,7 @@ class MasterSistemController extends Controller
         $data['program'] = Program::orderBy('created_at', 'ASC')->get();
         return view('mastersistem.program', $data);
     }
-    
+
     public function jabatanView()
     {
         $data['title'] = 'Jabatan';
@@ -86,7 +86,7 @@ class MasterSistemController extends Controller
             'jabatan' => 'required',
             'no_telepon' => 'required',
             'cabang' => 'required',
-        ],[
+        ], [
             'required' => 'Mohon lengkapi semua form yang ada'
         ]);
         $newKaryawan = new Karyawan;
@@ -131,10 +131,10 @@ class MasterSistemController extends Controller
     {
         $request->validate([
             'jenis_jabatan' => 'required',
-        ],[
+        ], [
             'required' => 'Mohon lengkapi semua form yang ada'
         ]);
-        
+
 
         $newJabatan = new Jabatan;
         $newJabatan->id_jabatan = Str::random(32);
@@ -155,10 +155,10 @@ class MasterSistemController extends Controller
         $request->validate([
             'kota' => 'required',
             'alamat' => 'required',
-        ],[
+        ], [
             'required' => 'Mohon lengkapi semua form yang ada'
         ]);
-        
+
         $newCabang = new Cabang;
         $newCabang->kota = $request->kota;
         $newCabang->alamat = $request->alamat;
@@ -177,7 +177,7 @@ class MasterSistemController extends Controller
     {
         $request->validate([
             'nama_kursus' => 'required'
-        ],[
+        ], [
             'required' => 'Mohon lengkapi semua form yang ada'
         ]);
 
@@ -185,6 +185,23 @@ class MasterSistemController extends Controller
         $newKursus->nama_kursus = $request->nama_kursus;
         $newKursus->save();
         return Redirect::back()->with('success', 'Data Kursus Baru Berhasil Ditambahkan');
+    }
+
+    public function editKursus(Request $request)
+    {
+        $request->validate([
+            'nama_kursus' => 'required'
+        ],[
+            'required' => 'Mohon isi form yang tersedia'
+        ]);
+
+        $id_kursus = $request->id_kursus;
+        $nama_kursus = $request->nama_kursus;
+
+        $kursus = Kursus::where('id_kursus', $id_kursus)->first();
+        $kursus->nama_kursus = $nama_kursus;
+        $kursus->save();
+        return Redirect::back()->with('success', 'Data Kursus Berhasil di Ubah');
     }
 
     public function removeKursus($id_kursus)
@@ -198,7 +215,7 @@ class MasterSistemController extends Controller
     {
         $request->validate([
             'nama_program' => 'required'
-        ],[
+        ], [
             'required' => 'Mohon lengkapi semua form yang ada'
         ]);
 
@@ -208,6 +225,23 @@ class MasterSistemController extends Controller
         return Redirect::back()->with('success', 'Data Program Baru Berhasil Ditambahkan');
     }
 
+    public function editProgram(Request $request)
+    {
+        $request->validate([
+            'nama_program' => 'required'
+        ],[
+            'required' => 'Mohon isi form yang tersedia'
+        ]);
+
+        $id_program = $request->id_program;
+        $nama_program = $request->nama_program;
+
+        $program = Program::where('id_program', $id_program)->first();
+        $program->nama_program = $nama_program;
+        $program->save();
+        return Redirect::back()->with('success', 'Data Program Berhasil di Ubah');
+    }
+
     public function removeProgram($id_program)
     {
         $program = Program::where('id_program', $id_program)->first();
@@ -215,8 +249,14 @@ class MasterSistemController extends Controller
         return Redirect::back()->with('success', 'Data Program Berhasil Dihapus');
     }
 
-    public function addBiaya($jenis_biaya, Request $request) 
+    public function addBiaya($jenis_biaya, Request $request)
     {
+        $request->validate([
+            'jumlah' => 'required',
+        ], [
+            'required' => 'Mohon isi kolom jumlah'
+        ]);
+        
         $newBiaya = new Uang;
         $newBiaya->id_uang = strtoupper(Str::random(8));
         $newBiaya->jenis_uang = $jenis_biaya;
@@ -254,5 +294,4 @@ class MasterSistemController extends Controller
         $newLogo->move('assets/images/', 'dian-logo.png');
         return Redirect::back()->with('success', 'Logo Sukses Diubah');
     }
-
 }

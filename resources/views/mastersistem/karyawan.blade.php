@@ -69,7 +69,7 @@
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
-                                        {{$kry->id_karyawan}}
+                                        {{$loop->iteration}}
                                     </span>
                                 </td>
                                 <td class="text-center">

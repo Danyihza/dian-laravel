@@ -20,6 +20,8 @@
                             <tr>
                                 <th class="text-center whitespace-no-wrap">NO</th>
                                 <th class="text-center whitespace-no-wrap">TANGGAL</th>
+                                <th class="text-center whitespace-no-wrap">NAMA</th>
+                                <th class="text-center whitespace-no-wrap">NIS</th>
                                 <th class="text-center whitespace-no-wrap">KETERANGAN</th>
                                 <th class="text-center whitespace-no-wrap">PEMASUKAN</th>
                                 <th class="text-center whitespace-no-wrap">PENGELUARAN</th>
@@ -28,6 +30,20 @@
                         </thead>
                         <tbody>
                             @foreach($transaksi as $key => $trans)
+                            @if($trans->jenis_transaksi == 'Pemasukan')
+                                @php
+                                $id_detail_kursus = \App\Models\Pembayaran::where('id_pembayaran', $trans->id_detail_transaksi)->first()->id_detail_kursus;
+                                // echo $id_detail_kursus;
+                                $detail_siswa = \App\Models\Fk_detail_siswa::where('id_detail_kursus', $id_detail_kursus)->first()->hasSiswa;
+                                $nama = $detail_siswa->nama;
+                                $nis = $detail_siswa->nis;
+                                @endphp
+                            @else
+                                @php
+                                $nama = '-';
+                                $nis = '-';
+                                @endphp
+                            @endif
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
@@ -36,6 +52,12 @@
                                 </td>
                                 <td class="text-center">
                                     <span class="font-medium">{{ date('d/m/Y', strtotime($trans->tanggal)) }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="font-medium">{{ $nama }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="font-medium">{{ $nis }}</span>
                                 </td>
                                 <td class="text-center">
                                     <span class="font-medium">{{ $trans->keterangan }}</span>

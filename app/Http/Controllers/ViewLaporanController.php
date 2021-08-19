@@ -176,7 +176,7 @@ class ViewLaporanController extends Controller
         $id_detail_kursus = $request->d;
         $pembayaran = $request->pembayaran;
         foreach ($pembayaran as $key => $value) {
-            $dataPembayaran = Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('pembayaran_ke', $key+1)->first();
+            $dataPembayaran = Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('pembayaran_ke', $key + 1)->first();
             $dataPembayaran->bayar = $value;
             $dataPembayaran->save();
             $dataTransaksi = Detail_Transaksi::where('id_detail_transaksi', $dataPembayaran->id_pembayaran)->first();
@@ -195,15 +195,16 @@ class ViewLaporanController extends Controller
         $data['extra'] = $request->tanggal;
         $tanggal_set = explode('/', $request->tanggal);
         $tanggal = $tanggal_set[2] . '-' . $tanggal_set[1] . '-' . $tanggal_set[0];
-        $cabang = $request->cabang ?? session('login-data')['cabang'] ;
-        $data['transaksi'] = Detail_Transaksi::where('tanggal', $tanggal)->where('cabang', $cabang)->orderBy('tanggal', 'DESC')->orderBy('created_at', 'DESC')->get();
+        $cabang = $request->cabang ?? session('login-data')['cabang'];
+        $data['transaksi'] = Detail_Transaksi::where('tanggal', $tanggal)->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
         if ($data['transaksi'] == null) {
             return Redirect::route('laporanHarianView')->with('error', 'Tidak ada data yang tercatat pada tanggal tersebut');
         }
         // $data['buku_kassss'] = Monev_Finansial::where('id_user', session('login-data')['id'])->orderby('tanggal', 'DESC')->orderby('created_at', 'DESC')->get();
         $saldo = 0;
         $data['saldo'] = [];
-        for ($i = count($data['transaksi']) - 1; $i >= 0; $i--) {
+        // for ($i = count($data['transaksi']) - 1; $i >= 0; $i--) {
+        for ($i = 0; $i < count($data['transaksi']); $i++) {
             if ($data['transaksi'][$i]->jenis_transaksi == 'Pengeluaran') {
                 $saldo -= $data['transaksi'][$i]->jumlah;
                 $data['saldo'][$i] = $saldo;
@@ -212,7 +213,7 @@ class ViewLaporanController extends Controller
                 $data['saldo'][$i] = $saldo;
             }
         }
-        $data['saldos'] = array_reverse($data['saldo']);
+        $data['saldos'] = ($data['saldo']);
         return view('viewlaporan.detaillaporanharian', $data);
     }
 
@@ -227,14 +228,14 @@ class ViewLaporanController extends Controller
         $tanggal_sampai = $tanggal_set_sampai[2] . '-' . $tanggal_set_sampai[1] . '-' . $tanggal_set_sampai[0];
         $data['dari'] = $request->tanggal_dari;
         $data['sampai'] = $request->tanggal_sampai;
-        $cabang = $request->cabang ?? session('login-data')['cabang'] ;
-        $data['transaksi'] = Detail_Transaksi::where('tanggal', '>=', $tanggal_dari)->where('tanggal', '<=', $tanggal_sampai)->where('cabang', $cabang)->orderBy('tanggal', 'DESC')->orderBy('created_at', 'DESC')->get();
+        $cabang = $request->cabang ?? session('login-data')['cabang'];
+        $data['transaksi'] = Detail_Transaksi::where('tanggal', '>=', $tanggal_dari)->where('tanggal', '<=', $tanggal_sampai)->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
         if ($data['transaksi'] == null) {
             return Redirect::route('laporanPeriodeView')->with('error', 'Tidak ada data yang tercatat pada tanggal tersebut');
         }
         $saldo = 0;
         $data['saldo'] = [];
-        for ($i = count($data['transaksi']) - 1; $i >= 0; $i--) {
+        for ($i = 0; $i < count($data['transaksi']); $i++) {
             if ($data['transaksi'][$i]->jenis_transaksi == 'Pengeluaran') {
                 $saldo -= $data['transaksi'][$i]->jumlah;
                 $data['saldo'][$i] = $saldo;
@@ -243,7 +244,7 @@ class ViewLaporanController extends Controller
                 $data['saldo'][$i] = $saldo;
             }
         }
-        $data['saldos'] = array_reverse($data['saldo']);
+        $data['saldos'] = ($data['saldo']);
         return view('viewlaporan.detaillaporanperiode', $data);
     }
 
@@ -261,10 +262,10 @@ class ViewLaporanController extends Controller
         $tanggal = explode("/", $tanggal_laporan);
         $data['tanggal'] = $tanggal_laporan;
         $cabang = $request->cabang ?? session('login-data')['cabang'];
-        $data['laporanharian'] = Detail_Transaksi::where('tanggal', $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0])->where('cabang', $cabang)->orderBy('tanggal', 'DESC')->orderBy('created_at', 'DESC')->get();
+        $data['laporanharian'] = Detail_Transaksi::where('tanggal', $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0])->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
         $saldo = 0;
         $data['saldo'] = [];
-        for ($i = count($data['laporanharian']) - 1; $i >= 0; $i--) {
+        for ($i = 0; $i < count($data['laporanharian']); $i++) {
             if ($data['laporanharian'][$i]->jenis_transaksi == 'Pengeluaran') {
                 $saldo -= $data['laporanharian'][$i]->jumlah;
                 $data['saldo'][$i] = $saldo;
@@ -273,7 +274,7 @@ class ViewLaporanController extends Controller
                 $data['saldo'][$i] = $saldo;
             }
         }
-        $data['saldos'] = array_reverse($data['saldo']);
+        $data['saldos'] = ($data['saldo']);
         $pdf = PDF::loadview('export.pdf.laporanharian', $data);
 
         return $pdf->download('Laporan Harian - ' . $tanggal_laporan . '.pdf');
@@ -288,10 +289,10 @@ class ViewLaporanController extends Controller
         $cabang = $request->cabang ?? session('login-data')['cabang'];
         $data['tanggal_dari'] = $tanggal_dari;
         $data['tanggal_sampai'] = $tanggal_sampai;
-        $data['laporanperiode'] = Detail_Transaksi::where('tanggal', '>=', $dari[2] . '-' . $dari[1] . '-' . $dari[0])->where('tanggal', '<=', $sampai[2] . '-' . $sampai[1] . '-' . $sampai[0])->where('cabang', $cabang)->orderBy('tanggal', 'DESC')->orderBy('created_at', 'DESC')->get();
+        $data['laporanperiode'] = Detail_Transaksi::where('tanggal', '>=', $dari[2] . '-' . $dari[1] . '-' . $dari[0])->where('tanggal', '<=', $sampai[2] . '-' . $sampai[1] . '-' . $sampai[0])->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
         $saldo = 0;
         $data['saldo'] = [];
-        for ($i = count($data['laporanperiode']) - 1; $i >= 0; $i--) {
+        for ($i = 0; $i < count($data['laporanperiode']); $i++) {
             if ($data['laporanperiode'][$i]->jenis_transaksi == 'Pengeluaran') {
                 $saldo -= $data['laporanperiode'][$i]->jumlah;
                 $data['saldo'][$i] = $saldo;
@@ -300,7 +301,7 @@ class ViewLaporanController extends Controller
                 $data['saldo'][$i] = $saldo;
             }
         }
-        $data['saldos'] = array_reverse($data['saldo']);
+        $data['saldos'] = ($data['saldo']);
         $pdf = PDF::loadview('export.pdf.laporanperiode', $data);
 
         return $pdf->download('Laporan Periode - ' . $tanggal_dari . ' s/d ' . $tanggal_sampai . '.pdf');
