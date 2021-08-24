@@ -199,7 +199,7 @@
                                         $ke = $dp + 1;
                                     }
                                     @endphp
-                                    <form action="{{ route('bayarPendidikan') }}" method="post" onsubmit="print()">
+                                    <form action="{{ route('bayarPendidikan') }}" method="post" onsubmit="print()" on>
                                         @csrf
                                         <input type="hidden" id="id_siswa" name="id_siswa" value="{{$siswa->id_siswa}}">
                                         <input type="hidden" id="id_detail_kursus" name="id_detail_kursus" value="{{$detail_kursus->id_detail}}">
@@ -209,7 +209,7 @@
                                         </div>
                                         <div class="mt-5">
                                             <label class="flex flex-col sm:flex-row">Tanggal Pembayaran</label>
-                                            <input class="mt-2 input w-full border block" id="tanggal_pembayaran" value={{$tanggal}} name="tanggal_pembayaran" readonly>
+                                            <input class="mt-2 datepicker input w-full border block" name="tanggal_pembayaran" id="tanggal_pembayaran" data-single-mode="true" required>
                                         </div>
                                         <div class="mt-3">
                                             <label class="flex flex-col sm:flex-row">Dibayar Sebesar</label>
@@ -263,12 +263,13 @@
     function print(){
         const confirm = window.confirm('Apakah anda ingin mencetak nota pembayaran ?');
         if (confirm) {
+            console.log('print');
             const id_siswa = document.getElementById('id_siswa').value;
             const id_detail_kursus = document.getElementById('id_detail_kursus').value;
             const tanggal = document.getElementById('tanggal_pembayaran').value;
             const jumlah = document.getElementById('jumlah').value;
             window.open(`{{ route('prinNotaPembayaran') }}?s=${id_siswa}&d=${id_detail_kursus}&j=${jumlah}&t=${tanggal}`, '_blank', 'location=yes,height=768,width=1366,scrollbars=yes,status=yes')
-            return true;
+            // return true;
         }else{
             return true;
         }

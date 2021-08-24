@@ -45,7 +45,8 @@ class AdministrasiController extends Controller
     {
         $data['title'] = 'pembayaran';
         $data['parent'] = 'administrasi';
-        $data['pembayaran'] = Fk_detail_siswa::orderBy('created_at', 'DESC')->get();
+        // $data['pembayaran'] = Fk_detail_siswa::orderBy('created_at', 'DESC')->get();
+        $data['pembayaran'] = Fk_detail_siswa::where('id_cabang', session('login-data')['cabang'])->orderBy('created_at', 'DESC')->get();
         // dd($data['pembayaran'][0]->hasDetailKursus->hasKursus);
         return view('administrasi.pembayaran', $data);
     }

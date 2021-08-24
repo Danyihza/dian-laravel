@@ -54,7 +54,7 @@
                                 </td>
                                 <td class="table-report__action w-56">
                                     <div class="flex justify-center items-center">
-                                        <a class="flex items-center text-theme-6" href="{{ route('removeLevel', $lvl->id_level) }}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')"> <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete </a>
+                                        <a href="javascript:;" data-toggle="modal" data-target="#modalEdit{{ $lvl->id_level }}" class="flex items-center text-theme-7" > <i data-feather="edit" class="w-4 h-4 mr-1"></i> Edit </a>
                                     </div>
                                 </td>
                             </tr>
@@ -68,6 +68,29 @@
         <!-- END: Content -->
     </div>
 </body>
+
+@foreach($level as $lvl)
+<div class="modal" id="modalEdit{{ $lvl->id_level }}">
+    <div class="modal__content">
+        <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+            <h2 class="font-medium text-base mr-auto">Edit Level</h2>
+        </div>
+        <div class="p-5 ">
+            <form action="{{ route('editLevel') }}" method="post">
+                @csrf
+                <input type="hidden" name="id_level" value="{{ $lvl->id_level }}">
+                <div>
+                    <label>Nama Level</label>
+                    <input type="text" class="input w-full border mt-2" name="nama_level" value="{{ $lvl->nama_level }}" placeholder="Masukkan Nama Level">
+                </div>
+        </div>
+        <div class="px-5 py-3 text-right border-t border-gray-200 dark:border-dark-5"> <button type="button" data-dismiss="modal"
+                class="button w-20 border text-gray-700 dark:border-dark-5 dark:text-gray-300 mr-1">Batal</button>
+            <button type="submit" class="button w-20 bg-theme-1 text-white">Simpan</button> </div>
+        </form>
+    </div>
+</div>
+@endforeach
 @endsection
 
 @section('script')

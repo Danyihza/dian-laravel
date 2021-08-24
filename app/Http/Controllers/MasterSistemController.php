@@ -143,6 +143,23 @@ class MasterSistemController extends Controller
         return Redirect::back()->with('success', 'Data Jabatan Baru Berhasil Ditambahkan');
     }
 
+    public function editJabatan(Request $request)
+    {
+        $request->validate([
+            'jenis_jabatan' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
+        ]);
+
+        $id_jabatan = $request->id_jabatan;
+        $jenis_jabatan = $request->jenis_jabatan;
+
+        $jabatan = Jabatan::where('id_jabatan', $id_jabatan)->first();
+        $jabatan->jenis_jabatan = $jenis_jabatan;
+        $jabatan->save();
+        return Redirect::back()->with('success', 'Data Jabatan Berhasil Diubah');
+    }
+
     public function removeJabatan($id_jabatan)
     {
         $jabatan = Jabatan::where('id_jabatan', $id_jabatan)->first();
@@ -164,6 +181,26 @@ class MasterSistemController extends Controller
         $newCabang->alamat = $request->alamat;
         $newCabang->save();
         return Redirect::back()->with('success', 'Data Cabang Baru Berhasil Ditambahkan');
+    }
+
+    public function editCabang(Request $request)
+    {
+        $request->validate([
+            'kota' => 'required',
+            'alamat' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
+        ]);
+
+        $id_cabang = $request->id_cabang;
+        $kota = $request->kota;
+        $alamat = $request->alamat;
+
+        $cabang = Cabang::where('id_cabang', $id_cabang)->first();
+        $cabang->kota = $kota;
+        $cabang->alamat = $alamat;
+        $cabang->save();
+        return Redirect::back()->with('success', 'Data Cabang Berhasil Diubah');
     }
 
     public function deleteCabang($id_cabang)
@@ -278,6 +315,21 @@ class MasterSistemController extends Controller
         $newLevel->nama_level = $request->nama_level;
         $newLevel->save();
         return Redirect::back()->with('success', 'Data Level Baru Berhasil Ditambahkan');
+    }
+
+    public function editLevel(Request $request)
+    {
+        $request->validate([
+            'nama_level' => 'required',
+        ],[
+            'required' => 'Mohon lengkapi semua form yang ada'
+        ]);
+        $id_level = $request->id_level;
+        $nama_level = $request->nama_level;
+        $level = Level::where('id_level', $id_level)->first();
+        $level->nama_level = $nama_level;
+        $level->save();
+        return Redirect::back()->with('success', 'Data Level Berhasil di Ubah');
     }
 
     public function removeLevel($id_level)
