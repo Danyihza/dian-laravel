@@ -29,6 +29,7 @@ Route::get('/signout', [AuthController::class, 'signout'])->name('signout');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 
 Route::group(['middleware' => 'authmiddleware'], function () {
+    Route::get('/reset', [DashboardController::class, 'resetData'])->name('resetData');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/administrasi/pendaftaran', [AdministrasiController::class, 'pendaftaranView'])->name('pendaftaranView');
     Route::get('/administrasi/pembayaran', [AdministrasiController::class, 'pembayaranView'])->name('pembayaranView');

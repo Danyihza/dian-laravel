@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Cabang;
+use App\Models\Detail_Kursus;
+use App\Models\Detail_Transaksi;
 use App\Models\Fk_detail_siswa;
+use App\Models\Pembayaran;
 use App\Models\Program;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class DashboardController extends Controller
 {
@@ -23,5 +28,17 @@ class DashboardController extends Controller
         $data['admin'] = Admin::count();
         $data['cabangs'] = Admin::where('id_admin', session('login-data')['id'])->first()->hasCabang;
         return view('dashboard', $data);
+    }
+
+    public function resetData()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Detail_Kursus::truncate();
+        Detail_Transaksi::truncate();
+        Fk_detail_siswa::truncate();
+        Pembayaran::truncate();
+        Siswa::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        return Redirect::back()->with('success', 'Data berhasil di reset');
     }
 }
