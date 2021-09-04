@@ -32,13 +32,17 @@ class DashboardController extends Controller
 
     public function resetData()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Detail_Kursus::truncate();
-        Detail_Transaksi::truncate();
-        Fk_detail_siswa::truncate();
-        Pembayaran::truncate();
-        Siswa::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        return Redirect::back()->with('success', 'Data berhasil di reset');
+        try {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Detail_Kursus::truncate();
+            Detail_Transaksi::truncate();
+            Fk_detail_siswa::truncate();
+            Pembayaran::truncate();
+            Siswa::truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            return Redirect::back()->with('success', 'Data berhasil di reset');
+        } catch (\Throwable $th) {
+            return Redirect::back()->with('error', 'Data gagal di reset');
+        }
     }
 }
