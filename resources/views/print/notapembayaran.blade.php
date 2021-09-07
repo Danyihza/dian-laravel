@@ -159,7 +159,7 @@
                 <td class="tg-c3ow" align="center" colspan="4" style="border-top: 1px solid black;">{{ $cabang->kota }}, {{ $tanggalTransaksi }}</td>
             </tr>
             <tr>
-                <td class="tg-0pky" colspan="4" rowspan="5" style="height: 150px; border-right: 1px solid black;"></td>
+                <td class="tg-0pky" colspan="4" rowspan="5" style="height: 100px; border-right: 1px solid black;"></td>
                 <td class="tg-c3ow" align="center" colspan="4">Tanda Tangan Penerima,</td>
             </tr>
             <tr>
@@ -308,7 +308,7 @@
                 <td class="tg-c3ow" align="center" colspan="4" style="border-top: 1px solid black;">{{ $cabang->kota }}, {{ $tanggalTransaksi }}</td>
             </tr>
             <tr>
-                <td class="tg-0pky" colspan="4" rowspan="5" style="height: 150px; border-right: 1px solid black;"></td>
+                <td class="tg-0pky" colspan="4" rowspan="5" style="height: 100px; border-right: 1px solid black;"></td>
                 <td class="tg-c3ow" align="center" colspan="4">Tanda Tangan Penerima,</td>
             </tr>
             <tr>

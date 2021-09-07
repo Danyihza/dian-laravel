@@ -20,30 +20,23 @@
                             <tr>
                                 <th class="text-center whitespace-no-wrap">NO</th>
                                 <th class="text-center whitespace-no-wrap">TANGGAL</th>
-                                <th class="text-center whitespace-no-wrap">NAMA</th>
                                 <th class="text-center whitespace-no-wrap">NIS</th>
+                                <th class="text-center whitespace-no-wrap">NAMA</th>
+                                <th class="text-center whitespace-no-wrap">PROGRAM</th>
                                 <th class="text-center whitespace-no-wrap">KETERANGAN</th>
-                                <th class="text-center whitespace-no-wrap">PEMASUKAN</th>
-                                <th class="text-center whitespace-no-wrap">PENGELUARAN</th>
-                                <th class="text-center whitespace-no-wrap">SALDO</th>
+                                <th class="text-center whitespace-no-wrap">SEBESAR (Rp)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($transaksi as $key => $trans)
-                            @if($trans->jenis_transaksi == 'Pemasukan')
                                 @php
                                 $id_detail_kursus = \App\Models\Pembayaran::where('id_pembayaran', $trans->id_detail_transaksi)->first()->id_detail_kursus;
                                 // echo $id_detail_kursus;
-                                $detail_siswa = \App\Models\Fk_detail_siswa::where('id_detail_kursus', $id_detail_kursus)->first()->hasSiswa;
-                                $nama = $detail_siswa->nama;
-                                $nis = $detail_siswa->nis;
+                                $detail_siswa = \App\Models\Fk_detail_siswa::where('id_detail_kursus', $id_detail_kursus)->first();
+                                $program = $detail_siswa->hasDetailKursus->hasProgram->nama_program;
+                                $nama = $detail_siswa->hasSiswa->nama;
+                                $nis = $detail_siswa->hasSiswa->nis;
                                 @endphp
-                            @else
-                                @php
-                                $nama = '-';
-                                $nis = '-';
-                                @endphp
-                            @endif
                             <tr>
                                 <td class="text-center">
                                     <span class="font-medium">
@@ -54,25 +47,26 @@
                                     <span class="font-medium">{{ date('d/m/Y', strtotime($trans->tanggal)) }}</span>
                                 </td>
                                 <td class="text-center">
+                                    <span class="font-medium">{{ $nis }}</span>
+                                </td>
+                                <td class="text-center">
                                     <span class="font-medium">{{ $nama }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="font-medium">{{ $nis }}</span>
+                                    <span class="font-medium">{{ $program }}</span>
                                 </td>
                                 <td class="text-center">
                                     <span class="font-medium">{{ $trans->keterangan }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <span class="font-medium">{{ $trans->jenis_transaksi == 'Pemasukan' ? $trans->jumlah : '' }}</span>
-                                </td>
-                                <td class="text-center">
-                                    <span class="font-medium">{{ $trans->jenis_transaksi == 'Pengeluaran' ? $trans->jumlah : '' }}</span>
-                                </td>
-                                <td class="text-center">
-                                    <span class="font-medium">{{ $saldos[$key] }}</span>
+                                    <span class="font-medium">{{ $trans->jumlah }}</span>
                                 </td>
                             </tr>
                             @endforeach
+                            <tr>
+                                <td align="center" colspan="6"><b>Total:</b></td>
+                                <td align="center"><span class="uang font-medium">{{$total}}</span></td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="mt-5">

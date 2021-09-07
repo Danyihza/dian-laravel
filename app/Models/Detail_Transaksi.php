@@ -29,8 +29,10 @@ class Detail_Transaksi extends Model
             // dd('no' . $no_transaksi);
             return $no_transaksi;
         }
-        $tanggal_last = substr($data->id_detail_transaksi, -13, -3);
+        // $tanggal_last = substr($data->id_detail_transaksi, -13, -3);
+        $tanggal_last = date('d/m/Y', strtotime($data->tanggal));
         $input_tanggal = date('d/m/Y', $tanggal);
+        // dd($tanggal_last);
         if ($tanggal_last != $input_tanggal) {
             $no_transaksi = str_pad(1, 2, '0', STR_PAD_LEFT);
             // dd($no_transaksi);

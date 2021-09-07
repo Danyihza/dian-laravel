@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Cabang;
 use App\Models\Detail_Kursus;
 use App\Models\Detail_Pembayaran;
@@ -196,26 +197,44 @@ class ViewLaporanController extends Controller
         $tanggal_set = explode('/', $request->tanggal);
         $tanggal = $tanggal_set[2] . '-' . $tanggal_set[1] . '-' . $tanggal_set[0];
         $cabang = $request->cabang ?? session('login-data')['cabang'];
-        $data['transaksi'] = Detail_Transaksi::where('tanggal', $tanggal)->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+        $data['transaksi'] = Detail_Transaksi::where('tanggal', $tanggal)->where('jenis_transaksi', 'Pemasukan')->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
         if ($data['transaksi'] == null) {
             return Redirect::route('laporanHarianView')->with('error', 'Tidak ada data yang tercatat pada tanggal tersebut');
         }
-        // $data['buku_kassss'] = Monev_Finansial::where('id_user', session('login-data')['id'])->orderby('tanggal', 'DESC')->orderby('created_at', 'DESC')->get();
-        $saldo = 0;
-        $data['saldo'] = [];
-        // for ($i = count($data['transaksi']) - 1; $i >= 0; $i--) {
-        for ($i = 0; $i < count($data['transaksi']); $i++) {
-            if ($data['transaksi'][$i]->jenis_transaksi == 'Pengeluaran') {
-                $saldo -= $data['transaksi'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            } else {
-                $saldo += $data['transaksi'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            }
+        $data['total'] = 0;
+        foreach ($data['transaksi'] as $transaksi) {
+            $data['total'] += $transaksi->jumlah;
         }
-        $data['saldos'] = ($data['saldo']);
         return view('viewlaporan.detaillaporanharian', $data);
     }
+    // public function laporanHarianDetail(Request $request)
+    // {
+    //     $data['parent'] = 'View & Laporan';
+    //     $data['title'] = 'Laporan Harian';
+    //     $data['extra'] = $request->tanggal;
+    //     $tanggal_set = explode('/', $request->tanggal);
+    //     $tanggal = $tanggal_set[2] . '-' . $tanggal_set[1] . '-' . $tanggal_set[0];
+    //     $cabang = $request->cabang ?? session('login-data')['cabang'];
+    //     $data['transaksi'] = Detail_Transaksi::where('tanggal', $tanggal)->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+    //     if ($data['transaksi'] == null) {
+    //         return Redirect::route('laporanHarianView')->with('error', 'Tidak ada data yang tercatat pada tanggal tersebut');
+    //     }
+    //     // $data['buku_kassss'] = Monev_Finansial::where('id_user', session('login-data')['id'])->orderby('tanggal', 'DESC')->orderby('created_at', 'DESC')->get();
+    //     $saldo = 0;
+    //     $data['saldo'] = [];
+    //     // for ($i = count($data['transaksi']) - 1; $i >= 0; $i--) {
+    //     for ($i = 0; $i < count($data['transaksi']); $i++) {
+    //         if ($data['transaksi'][$i]->jenis_transaksi == 'Pengeluaran') {
+    //             $saldo -= $data['transaksi'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         } else {
+    //             $saldo += $data['transaksi'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         }
+    //     }
+    //     $data['saldos'] = ($data['saldo']);
+    //     return view('viewlaporan.detaillaporanharian', $data);
+    // }
 
     public function laporanPeriodeDetail(Request $request)
     {
@@ -229,24 +248,46 @@ class ViewLaporanController extends Controller
         $data['dari'] = $request->tanggal_dari;
         $data['sampai'] = $request->tanggal_sampai;
         $cabang = $request->cabang ?? session('login-data')['cabang'];
-        $data['transaksi'] = Detail_Transaksi::where('tanggal', '>=', $tanggal_dari)->where('tanggal', '<=', $tanggal_sampai)->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+        $data['transaksi'] = Detail_Transaksi::where('tanggal', '>=', $tanggal_dari)->where('tanggal', '<=', $tanggal_sampai)->where('jenis_transaksi', 'Pemasukan')->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
         if ($data['transaksi'] == null) {
             return Redirect::route('laporanPeriodeView')->with('error', 'Tidak ada data yang tercatat pada tanggal tersebut');
         }
-        $saldo = 0;
-        $data['saldo'] = [];
-        for ($i = 0; $i < count($data['transaksi']); $i++) {
-            if ($data['transaksi'][$i]->jenis_transaksi == 'Pengeluaran') {
-                $saldo -= $data['transaksi'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            } else {
-                $saldo += $data['transaksi'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            }
+        $data['total'] = 0;
+        foreach ($data['transaksi'] as $transaksi) {
+            $data['total'] += $transaksi->jumlah;
         }
-        $data['saldos'] = ($data['saldo']);
         return view('viewlaporan.detaillaporanperiode', $data);
     }
+    // public function laporanPeriodeDetail(Request $request)
+    // {
+    //     $data['parent'] = 'View & Laporan';
+    //     $data['title'] = 'Laporan Periode';
+    //     $data['extra'] = $request->tanggal_dari . ' - ' . $request->tanggal_sampai;
+    //     $tanggal_set_dari = explode('/', $request->tanggal_dari);
+    //     $tanggal_set_sampai = explode('/', $request->tanggal_sampai);
+    //     $tanggal_dari = $tanggal_set_dari[2] . '-' . $tanggal_set_dari[1] . '-' . $tanggal_set_dari[0];
+    //     $tanggal_sampai = $tanggal_set_sampai[2] . '-' . $tanggal_set_sampai[1] . '-' . $tanggal_set_sampai[0];
+    //     $data['dari'] = $request->tanggal_dari;
+    //     $data['sampai'] = $request->tanggal_sampai;
+    //     $cabang = $request->cabang ?? session('login-data')['cabang'];
+    //     $data['transaksi'] = Detail_Transaksi::where('tanggal', '>=', $tanggal_dari)->where('tanggal', '<=', $tanggal_sampai)->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+    //     if ($data['transaksi'] == null) {
+    //         return Redirect::route('laporanPeriodeView')->with('error', 'Tidak ada data yang tercatat pada tanggal tersebut');
+    //     }
+    //     $saldo = 0;
+    //     $data['saldo'] = [];
+    //     for ($i = 0; $i < count($data['transaksi']); $i++) {
+    //         if ($data['transaksi'][$i]->jenis_transaksi == 'Pengeluaran') {
+    //             $saldo -= $data['transaksi'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         } else {
+    //             $saldo += $data['transaksi'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         }
+    //     }
+    //     $data['saldos'] = ($data['saldo']);
+    //     return view('viewlaporan.detaillaporanperiode', $data);
+    // }
 
     public function exportArsipSiswa()
     {
@@ -260,28 +301,46 @@ class ViewLaporanController extends Controller
     {
         $tanggal_laporan = urldecode($request->date);
         $tanggal = explode("/", $tanggal_laporan);
-        $data['tanggal'] = $tanggal_laporan;
+        $data['tanggal'] = $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
         $cabang = $request->cabang ?? session('login-data')['cabang'];
-        $data['laporanharian'] = Detail_Transaksi::where('tanggal', $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0])->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
-        $saldo = 0;
-        $data['saldo'] = [];
-        for ($i = 0; $i < count($data['laporanharian']); $i++) {
-            if ($data['laporanharian'][$i]->jenis_transaksi == 'Pengeluaran') {
-                $saldo -= $data['laporanharian'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            } else {
-                $saldo += $data['laporanharian'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            }
+        $data['laporanharian'] = Detail_Transaksi::where('tanggal', $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0])->where('jenis_transaksi', 'Pemasukan')->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+        $data['total'] = 0;
+        $data['cabang'] = Admin::where('id_admin', session('login-data')['id'])->first()->hasCabang;
+        foreach ($data['laporanharian'] as $laporanh) {
+            $data['total'] += $laporanh->jumlah;
         }
-        $data['saldos'] = ($data['saldo']);
-        $pdf = PDF::loadview('export.pdf.laporanharian', $data);
+        // dd($data['total']);
+        $pdf = PDF::loadview('export.pdf.laporanharian', $data)->setPaper('a4', 'landscape');
 
         return $pdf->download('Laporan Harian - ' . $tanggal_laporan . '.pdf');
     }
+    // public function exportLaporanHarian(Request $request)
+    // {
+    //     $tanggal_laporan = urldecode($request->date);
+    //     $tanggal = explode("/", $tanggal_laporan);
+    //     $data['tanggal'] = $tanggal_laporan;
+    //     $cabang = $request->cabang ?? session('login-data')['cabang'];
+    //     $data['laporanharian'] = Detail_Transaksi::where('tanggal', $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0])->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+    //     $saldo = 0;
+    //     $data['saldo'] = [];
+    //     for ($i = 0; $i < count($data['laporanharian']); $i++) {
+    //         if ($data['laporanharian'][$i]->jenis_transaksi == 'Pengeluaran') {
+    //             $saldo -= $data['laporanharian'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         } else {
+    //             $saldo += $data['laporanharian'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         }
+    //     }
+    //     $data['saldos'] = ($data['saldo']);
+    //     $pdf = PDF::loadview('export.pdf.laporanharian', $data)->setPaper('a4', 'landscape');
+
+    //     return $pdf->download('Laporan Harian - ' . $tanggal_laporan . '.pdf');
+    // }
 
     public function exportLaporanPeriode(Request $request)
     {
+        // dd('asdsad');
         $tanggal_dari = urldecode($request->from);
         $tanggal_sampai = urldecode($request->to);
         $dari = explode("/", $tanggal_dari);
@@ -289,23 +348,41 @@ class ViewLaporanController extends Controller
         $cabang = $request->cabang ?? session('login-data')['cabang'];
         $data['tanggal_dari'] = $tanggal_dari;
         $data['tanggal_sampai'] = $tanggal_sampai;
-        $data['laporanperiode'] = Detail_Transaksi::where('tanggal', '>=', $dari[2] . '-' . $dari[1] . '-' . $dari[0])->where('tanggal', '<=', $sampai[2] . '-' . $sampai[1] . '-' . $sampai[0])->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
-        $saldo = 0;
-        $data['saldo'] = [];
-        for ($i = 0; $i < count($data['laporanperiode']); $i++) {
-            if ($data['laporanperiode'][$i]->jenis_transaksi == 'Pengeluaran') {
-                $saldo -= $data['laporanperiode'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            } else {
-                $saldo += $data['laporanperiode'][$i]->jumlah;
-                $data['saldo'][$i] = $saldo;
-            }
+        $data['laporanperiode'] = Detail_Transaksi::where('tanggal', '>=', $dari[2] . '-' . $dari[1] . '-' . $dari[0])->where('tanggal', '<=', $sampai[2] . '-' . $sampai[1] . '-' . $sampai[0])->where('jenis_transaksi', 'Pemasukan')->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+        $data['cabang'] = Admin::where('id_admin', session('login-data')['id'])->first()->hasCabang;
+        $data['total'] = 0;
+        foreach ($data['laporanperiode'] as $laporanp) {
+            $data['total'] += $laporanp->jumlah;
         }
-        $data['saldos'] = ($data['saldo']);
-        $pdf = PDF::loadview('export.pdf.laporanperiode', $data);
-
+        $pdf = PDF::loadview('export.pdf.laporanperiode', $data)->setPaper('a4', 'landscape');
         return $pdf->download('Laporan Periode - ' . $tanggal_dari . ' s/d ' . $tanggal_sampai . '.pdf');
     }
+    // public function exportLaporanPeriode(Request $request)
+    // {
+    //     $tanggal_dari = urldecode($request->from);
+    //     $tanggal_sampai = urldecode($request->to);
+    //     $dari = explode("/", $tanggal_dari);
+    //     $sampai = explode("/", $tanggal_sampai);
+    //     $cabang = $request->cabang ?? session('login-data')['cabang'];
+    //     $data['tanggal_dari'] = $tanggal_dari;
+    //     $data['tanggal_sampai'] = $tanggal_sampai;
+    //     $data['laporanperiode'] = Detail_Transaksi::where('tanggal', '>=', $dari[2] . '-' . $dari[1] . '-' . $dari[0])->where('tanggal', '<=', $sampai[2] . '-' . $sampai[1] . '-' . $sampai[0])->where('cabang', $cabang)->orderBy('tanggal', 'ASC')->orderBy('created_at', 'ASC')->get();
+    //     $saldo = 0;
+    //     $data['saldo'] = [];
+    //     for ($i = 0; $i < count($data['laporanperiode']); $i++) {
+    //         if ($data['laporanperiode'][$i]->jenis_transaksi == 'Pengeluaran') {
+    //             $saldo -= $data['laporanperiode'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         } else {
+    //             $saldo += $data['laporanperiode'][$i]->jumlah;
+    //             $data['saldo'][$i] = $saldo;
+    //         }
+    //     }
+    //     $data['saldos'] = ($data['saldo']);
+    //     $pdf = PDF::loadview('export.pdf.laporanperiode', $data)->setPaper('a4', 'landscape');
+
+    //     return $pdf->download('Laporan Periode - ' . $tanggal_dari . ' s/d ' . $tanggal_sampai . '.pdf');
+    // }
 
     public function printArsipPembayaran(Request $request)
     {
