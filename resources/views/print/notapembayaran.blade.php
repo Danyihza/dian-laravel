@@ -51,7 +51,7 @@
                 <td align="center" style="border-right: 1px solid black; border-bottom: 1px solid black;" class="tg-ted4" colspan="3" rowspan="3"><span
                         style="font-weight:bold">DIAN
                         INSTITUTE</span><br>PUSDIKLAT DAN LATIHAN KERJA</td>
-                <td align="center" class="tg-ted4" colspan="3" rowspan="2" style="border-right: 1px solid black;">Cabang : Jl. Raya Manukan Kulon 36</td>
+                <td align="center" class="tg-ted4" colspan="3" rowspan="2" style="border-right: 1px solid black;">Cabang : {{$cabang->alamat}} - {{$cabang->kota}}</td>
                 <td align="center" class="tg-ted4" colspan="3" rowspan="3" style="border-bottom: 1px solid black;"><span style="font-weight:bold; border: 1px solid black; padding: 0.5rem;">Untuk Siswa</span></td>
             </tr>
             <tr>
