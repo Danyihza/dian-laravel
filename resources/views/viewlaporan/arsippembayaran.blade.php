@@ -68,6 +68,18 @@
 @section('script')
 <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('assets/js/datatables.min.js') }}"></script>
+@if($url_print)
+<script>
+    function htmlDecode(input) {
+        var doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
+    $(document).ready(function() {
+        const url_print = htmlDecode("{{$url_print}}");
+        window.open(url_print, '_blank', 'location=yes,height=768,width=1366,scrollbars=yes,status=yes');
+    })
+</script>
+@endif
 <script>
 $(document).ready(function() {
     $('#pembayaran').DataTable();

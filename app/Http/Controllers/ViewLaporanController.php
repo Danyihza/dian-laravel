@@ -31,9 +31,12 @@ class ViewLaporanController extends Controller
 
     public function arsipPembayaranView()
     {
+        // dd(htmlspecialchars_decode(session()->get('url_print')));
         $data['parent'] = 'View & Laporan';
         $data['title'] = 'Arsip Pembayaran';
         $data['siswa'] = Fk_detail_siswa::where('id_cabang', session('login-data')['cabang'])->get();
+        $data['url_print'] = urldecode(session()->get('url_print')) ?? null;
+        // dd($data['url_print']);
         return view('viewlaporan.arsippembayaran', $data);
     }
 
@@ -135,6 +138,8 @@ class ViewLaporanController extends Controller
         $id_detail_kursus = $request->d;
 
         Fk_detail_siswa::where('id_siswa', $id_siswa)->where('id_detail_kursus', $id_detail_kursus)->delete();
+        Pembayaran::where('id_detail_kursus', $id_detail_kursus)->where('id_siswa', $id_siswa)->delete();
+        Detail_Transaksi::where('id_detail_kursus', $id_detail_kursus)->where('id_siswa', $id_siswa)->delete();
         Siswa::where('id_siswa', $id_siswa)->delete();
         Detail_Kursus::where('id_detail', $id_detail_kursus)->delete();
         return Redirect::back()->with('success', 'Data Siswa Berhasil Dihapus');

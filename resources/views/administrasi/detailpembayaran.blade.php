@@ -199,10 +199,11 @@
                                         $ke = $dp + 1;
                                     }
                                     @endphp
-                                    <form action="{{ route('bayarPendidikan') }}" method="post" onsubmit="print()" on>
+                                    <form action="{{ route('bayarPendidikan') }}" method="post" onsubmit="print()">
                                         @csrf
                                         <input type="hidden" id="id_siswa" name="id_siswa" value="{{$siswa->id_siswa}}">
                                         <input type="hidden" id="id_detail_kursus" name="id_detail_kursus" value="{{$detail_kursus->id_detail}}">
+                                        <input type="hidden" id="url_print" name="url_print">
                                         <hr class="mt-5">
                                         <div class="mt-5">
                                             <h1 class="text-xl font-bold">Untuk Pembayaran Ke-{{ $ke ?? 1 }}</h1>
@@ -268,9 +269,12 @@
             const id_detail_kursus = document.getElementById('id_detail_kursus').value;
             const tanggal = document.getElementById('tanggal_pembayaran').value;
             const jumlah = document.getElementById('jumlah').value;
-            window.open(`{{ route('prinNotaPembayaran') }}?s=${id_siswa}&d=${id_detail_kursus}&j=${jumlah}&t=${tanggal}`, '_blank', 'location=yes,height=768,width=1366,scrollbars=yes,status=yes')
+            // window.open(`{{ route('prinNotaPembayaran') }}?s=${id_siswa}&d=${id_detail_kursus}&j=${jumlah}&t=${tanggal}`, '_blank', 'location=yes,height=768,width=1366,scrollbars=yes,status=yes');
+            const url_print = `{{ route('prinNotaPembayaran') }}?s=${id_siswa}&d=${id_detail_kursus}&j=${jumlah}&t=${tanggal}`;
+            document.querySelector('#url_print').value = url_print;
             // return true;
         }else{
+            document.querySelector('#url_print').value = null;
             return true;
         }
     }

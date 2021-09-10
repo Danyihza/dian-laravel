@@ -238,7 +238,11 @@ class AdministrasiController extends Controller
 
     public function bayarPendidikan(Request $request)
     {
+        // dd($request->url_print);
+        $url_print = urlencode($request->url_print);
+        // dd($url_print);
         $id_detail_kursus = $request->id_detail_kursus;
+        $id_siswa = $request->id_siswa;
         $tanggal = explode('/', $request->tanggal_pembayaran);
         $bayar = $request->dibayar;
         $keterangan = $request->keterangan;
@@ -248,6 +252,7 @@ class AdministrasiController extends Controller
 
         $newPembayaran = new Pembayaran;
         $newPembayaran->id_pembayaran = $id_pembayaran;
+        $newPembayaran->id_siswa = $id_siswa;
         $newPembayaran->id_detail_kursus = $id_detail_kursus;
         $newPembayaran->tanggal_pembayaran = $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
         $newPembayaran->bayar = $bayar;
@@ -260,6 +265,8 @@ class AdministrasiController extends Controller
 
         $newDetailTransaksi = new Detail_Transaksi;
         $newDetailTransaksi->id_detail_transaksi = $id_pembayaran;
+        $newDetailTransaksi->id_siswa = $id_siswa;
+        $newDetailTransaksi->id_detail_kursus = $id_detail_kursus;
         $newDetailTransaksi->tanggal = $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
         $newDetailTransaksi->keterangan = $keterangan;
         $newDetailTransaksi->jenis_transaksi = 'Pemasukan';
@@ -269,7 +276,7 @@ class AdministrasiController extends Controller
         $newPembayaran->save();
         $newDetailTransaksi->save();
 
-        return Redirect::route('arsipPembayaranView')->with('success', 'Pembayaran Berhasil');
+        return Redirect::route('arsipPembayaranView')->with(['success' => 'Pembayaran Berhasil', 'url_print' => $url_print]);
     }
 
     // public function printNota(Request $request)
@@ -337,7 +344,7 @@ class AdministrasiController extends Controller
                 $data['telah_dibayar'] += $py->bayar;
             }
         }
-        $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'] - $data['jumlah_bayar'];
+        $data['sisa_pembayaran'] = $data['detail_kursus']->jumlah - $data['telah_dibayar'];
         $data['no_transaksi'] = Pembayaran::where('id_detail_kursus', $id_detail_kursus)->latest()->first()->id_pembayaran;
         $tanggal = date('d');
         $bulan = (int) date('m');
