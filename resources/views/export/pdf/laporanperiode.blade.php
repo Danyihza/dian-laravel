@@ -11,8 +11,9 @@
 		}
 	</style>
 	<center>
+		<h5>OMSET {{ $cabang->alamat . ' - ' . $cabang->kota}}</h5>
 		<h5>Laporan Periode - {{ $tanggal_dari }} s/d {{ $tanggal_sampai }}</h4>
-		<h6><a target="_blank" href="{{ route('dashboard') }}">Dian Institute</a></h5>
+		<h6>Dian Institute</h5>
 	</center>
  
 	<table class='table table-bordered'>

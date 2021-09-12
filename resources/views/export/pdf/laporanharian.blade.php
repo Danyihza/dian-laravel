@@ -11,8 +11,9 @@
 		}
 	</style>
 	<center>
-		<h5>Laporan Harian - {{ date('d/m/Y', strtotime($tanggal)) }}</h5>
 		<h5>OMSET {{ $cabang->alamat . ' - ' . $cabang->kota}}</h5>
+		<h5>Laporan Harian - {{ date('d/m/Y', strtotime($tanggal)) }}</h5>
+		<h6>Dian Institute</h5>
 	</center>
  
 	<table class='table table-bordered'>
